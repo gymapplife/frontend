@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import FacebookLogin from 'react-facebook-login';
+import * as constants from '../constants'
 
 class Header extends Component {
     constructor(props) {
@@ -27,7 +28,7 @@ class Header extends Component {
             <div>
                 {newUserGreeting}
                 <FacebookLogin
-                    appId="457054341361327"
+                    appId="{constants.FACEBOOK_APP_ID}"
                     autoLoad={false}
                     fields="name,email,picture"
                     callback={this.props.onFacebookLogin} />
