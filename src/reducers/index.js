@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import { example } from './example';
+import { facebook } from './facebook';
 
 export default combineReducers({
-    example
+    facebook
 });
