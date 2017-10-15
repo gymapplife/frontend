@@ -1,20 +1,13 @@
-import React, { Component } from 'react';
-import FacebookLogin from 'react-facebook-login';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import FacebookLogin from 'react-facebook-login'
 import * as constants from '../constants'
+import { facebookLogin } from '../actions'
 
 class Header extends Component {
-    constructor(props) {
-        super(props)
-        this.onLoginClicked = this.onLoginClicked.bind(this);
-    }
-
-    onLoginClicked() {
-
-    }
-
     render() {
-        const newUserGreeting = <h1> Welcome! </h1>
-        const returningUserGreeting = <h1> Welcome back, {this.props.userInfo.userName}! </h1>
+        const newUserGreeting = <h1>Welcome!</h1>
+        const returningUserGreeting = <h1>Welcome back, {this.props.userInfo.name}!</h1>
 
         if (this.props.loggedIn) {
             return (
@@ -28,13 +21,32 @@ class Header extends Component {
             <div>
                 {newUserGreeting}
                 <FacebookLogin
-                    appId="{constants.FACEBOOK_APP_ID}"
+                    appId={constants.FACEBOOK_APP_ID}
                     autoLoad={false}
-                    fields="name,email,picture"
-                    callback={this.props.onFacebookLogin} />
+                    fields={constants.FACEBOOK_FIELDS}
+                    callback={this.props.handleFacebookResponse} />
             </div>
         )
     }
 }
 
-export default Header
+const mapStateToProps = state => {
+  return {
+    loggedIn: state.loggedIn,
+    userInfo: state.userInfo,
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    handleFacebookResponse: response => {
+      console.log(response)
+      dispatch(facebookLogin(response))
+    }
+  }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Header)

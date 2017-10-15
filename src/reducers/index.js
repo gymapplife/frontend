@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
-import { facebook } from './facebook';
+import { userInfo, loggedIn } from './facebook';
 
 export default combineReducers({
-    facebook
+    loggedIn,
+    userInfo,
 });
