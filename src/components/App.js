@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import Header from './Header'
+import FacebookHeader from '../containers/FacebookHeader'
 
 const App = () => (
     <div>
-        <Header />
+        <FacebookHeader />
     </div>
 )
 

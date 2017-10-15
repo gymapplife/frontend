@@ -1,52 +1,40 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import FacebookLogin from 'react-facebook-login'
 import * as constants from '../constants'
-import { facebookLogin } from '../actions'
 
-class Header extends Component {
-    render() {
-        const newUserGreeting = <h1>Welcome!</h1>
-        const returningUserGreeting = <h1>Welcome back, {this.props.userInfo.name}!</h1>
+const Header = ({ loggedIn, userInfo, handleFacebookResponse }) => {
+    const newUserGreeting = <h1>Welcome!</h1>
+    const returningUserGreeting = <h1>Welcome back, {userInfo.name}!</h1>
 
-        if (this.props.loggedIn) {
-            return (
-                <div>
-                    {returningUserGreeting}
-                </div>
-            )
-        }
-
+    if (loggedIn) {
         return (
             <div>
-                {newUserGreeting}
-                <FacebookLogin
-                    appId={constants.FACEBOOK_APP_ID}
-                    autoLoad={false}
-                    fields={constants.FACEBOOK_FIELDS}
-                    callback={this.props.handleFacebookResponse} />
+                {returningUserGreeting}
             </div>
         )
     }
+
+    return (
+        <div>
+            {newUserGreeting}
+            <FacebookLogin
+                appId={constants.FACEBOOK_APP_ID}
+                autoLoad={false}
+                fields={constants.FACEBOOK_FIELDS}
+                callback={handleFacebookResponse} />
+        </div>
+    )
 }
 
-const mapStateToProps = state => {
-  return {
-    loggedIn: state.loggedIn,
-    userInfo: state.userInfo,
-  }
+Header.propTypes = {
+    loggedIn: PropTypes.bool.isRequired,
+    userInfo: PropTypes.shape({
+        id: PropTypes.string,
+        name: PropTypes.string,
+        accessToken: PropTypes.string,
+    }),
+    handleFacebookResponse: PropTypes.func.isRequired,
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    handleFacebookResponse: response => {
-      console.log(response)
-      dispatch(facebookLogin(response))
-    }
-  }
-}
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Header)
+export default Header
