@@ -9,6 +9,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import rootReducer from './reducers'
 import 'typeface-roboto'
 import App from './components/App'
+import SignupForm from './components/SignupForm'
+import { HashRouter, Switch, Route } from 'react-router-dom'
 
 const store = createStore(
     rootReducer,
@@ -27,7 +29,12 @@ persistStore(store)
 render(
     <Provider store={store}>
         <MuiThemeProvider>
-            <App />
+          <HashRouter>
+          <Switch>
+            <Route exact path='/' component={App} />
+            <Route path='/signup' component={SignupForm} />
+          </Switch>
+          </HashRouter>
         </MuiThemeProvider>
     </Provider>,
     document.getElementById('root')
