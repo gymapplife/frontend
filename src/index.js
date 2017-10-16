@@ -6,6 +6,8 @@ import thunk from 'redux-thunk';
 import { logger } from 'redux-logger';
 import rootReducer from './reducers'
 import App from './components/App'
+import SignupForm from './components/SignupForm'
+import { HashRouter, Switch, Route } from 'react-router-dom'
 
 const store = createStore(
     rootReducer,
@@ -17,7 +19,12 @@ const store = createStore(
 
 render(
   <Provider store={store}>
-      <App />
+    <HashRouter>
+      <Switch>
+        <Route exact path='/' component={App} />
+        <Route path='/signup' component={SignupForm} />
+      </Switch>
+    </HashRouter>
   </Provider>,
   document.getElementById('root')
 );
