@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { Form, Text } from 'react-form'
+import { Redirect } from 'react-router'
 
 class RadioGroup extends React.Component {
     constructor(props) {
@@ -11,9 +12,6 @@ class RadioGroup extends React.Component {
     }
 
     handleOptionChange(event) {
-        // this.setState({
-        //     selectedOption: event.target.value
-        // });
         this.props.onChange(event)
     }
 
@@ -50,7 +48,6 @@ class TextInput extends React.Component {
     }
 
     handleChange(event) {
-        // this.setState({value: event.target.value});
         this.props.onChange(event)
     }
 
@@ -76,7 +73,8 @@ class SignupForm extends React.Component {
             fitnessGoalOption: "",
             experienceLevelOption: "",
             weight: '',
-            height: ''
+            height: '',
+            fireRedirect: false
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -97,6 +95,9 @@ class SignupForm extends React.Component {
 
     handleSubmit(event) {
         console.log("submit!", this.state);
+        this.setState({
+            fireRedirect: true
+        })
         event.preventDefault();
     }
 
@@ -106,6 +107,7 @@ class SignupForm extends React.Component {
         const name = "Fitness Goals"
 
         return (
+            <div>
             <form onSubmit={this.handleSubmit}>
                 <RadioGroup 
                     name="fitnessGoalOption"
@@ -138,6 +140,12 @@ class SignupForm extends React.Component {
 
                 <input type="submit" value="Submit" />
             </form>
+            {
+                this.state.fireRedirect && (
+                    <Redirect to={'/'} />
+                )
+            }
+            </div>
         )
     }
 }
