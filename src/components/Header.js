@@ -1,30 +1,29 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import FacebookLogin from 'react-facebook-login'
+import {Card, CardTitle, CardText} from 'material-ui/Card'
 import * as constants from '../constants'
 
 const Header = ({ loggedIn, userInfo, handleFacebookResponse }) => {
-    const newUserGreeting = <h1>Welcome!</h1>
-    const returningUserGreeting = <h1>Welcome back, {userInfo.name}!</h1>
-
-    if (loggedIn) {
-        return (
-            <div>
-                {returningUserGreeting}
-            </div>
-        )
-    }
-
-    return (
-        <div>
-            {newUserGreeting}
-            <FacebookLogin
-                appId={constants.FACEBOOK_APP_ID}
-                autoLoad={false}
-                fields={constants.FACEBOOK_FIELDS}
-                callback={handleFacebookResponse} />
-        </div>
+    const newUser = (
+        <Card>
+            <CardTitle title="Welcome!" />
+            <CardText>
+                <FacebookLogin
+                    appId={constants.FACEBOOK_APP_ID}
+                    autoLoad={false}
+                    fields={constants.FACEBOOK_FIELDS}
+                    callback={handleFacebookResponse} />
+            </CardText>
+        </Card>
     )
+    const returningUser = (
+        <Card>
+            <CardTitle title={`Welcome back, ${userInfo.name}!`} />
+        </Card>
+    )
+
+    return loggedIn ? returningUser : newUser
 }
 
 Header.propTypes = {
