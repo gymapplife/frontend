@@ -78,25 +78,26 @@ class SignupForm extends React.Component {
             <div>
                 <SelectField id="fitnessGoalOption" hintText="Fitness Goals" onChange={this.handleFitnessGoalChange}
                 value={this.state.fitnessGoalOption} errorText={!this.state.fitnessGoalOption && this.state.showErr && "Required"}>
-                    <MenuItem value="Strength Training" primaryText="Strength Training" />
-                    <MenuItem value="Weight Loss" primaryText="Weight Loss" />
-                    <MenuItem value="Cardio" primaryText="Cardio" />
+                    <MenuItem value="STRENGTH_TRAINING" primaryText="Strength Training" />
+                    <MenuItem value="LOSE_WEIGHT" primaryText="Weight Loss" />
+                    <MenuItem value="CARDIO" primaryText="Cardio" />
                 </SelectField>
             </div><div>
                 <SelectField id="experienceLevelOption" hintText="Experience Level" onChange={this.handleExperienceLevelChange}
                 value={this.state.experienceLevelOption} errorText={!this.state.experienceLevelOption && this.state.showErr && "Required"}>
-                    <MenuItem value="New" primaryText="New" />
-                    <MenuItem value="< 1 Year" primaryText="< 1 Year" />
-                    <MenuItem value="1 - 3 years" primaryText="1 - 3 years" />
-                    <MenuItem value="3+ years" primaryText="3+ years" />
+                    <MenuItem value="NEW" primaryText="New" />
+                    <MenuItem value="BEGINNER" primaryText="< 1 Year" />
+                    <MenuItem value="NOVICE" primaryText="1 - 3 years" />
+                    <MenuItem value="INTERMEDIATE" primaryText="3 - 5 years" />
+                    <MenuItem value="ADVANCED" primaryText="5+" />
                 </SelectField>
             </div>
             <div>
-                <TextField name="weight" hintText="What is your weight?" onChange={this.handleTextInputChange}
+                <TextField name="weight" hintText="What is your weight (kg)?" onChange={this.handleTextInputChange}
                 value={this.state.weight} errorText={!this.state.weight && this.state.showErr && "Required"}/>
             </div>
             <div>
-                <TextField name="height" hintText="What is your height?" onChange={this.handleTextInputChange}
+                <TextField name="height" hintText="What is your height (cm)?" onChange={this.handleTextInputChange}
                 value={this.state.height} errorText={!this.state.height && this.state.showErr && "Required"}/>
             </div>
             <div>
