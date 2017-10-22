@@ -8,9 +8,7 @@ import { logger } from 'redux-logger'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import rootReducer from './reducers'
 import 'typeface-roboto'
-import App from './components/App'
-import SignupForm from './components/SignupForm'
-import { HashRouter, Switch, Route } from 'react-router-dom'
+import MainRouter from './routes'
 
 const store = createStore(
     rootReducer,
@@ -29,12 +27,7 @@ persistStore(store)
 render(
     <Provider store={store}>
         <MuiThemeProvider>
-          <HashRouter>
-          <Switch>
-            <Route exact path='/' component={App} />
-            <Route path='/signup' component={SignupForm} />
-          </Switch>
-          </HashRouter>
+          <MainRouter />
         </MuiThemeProvider>
     </Provider>,
     document.getElementById('root')
