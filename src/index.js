@@ -8,7 +8,7 @@ import { logger } from 'redux-logger'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import rootReducer from './reducers'
 import 'typeface-roboto'
-import App from './components/App'
+import MainRouter from './routes'
 
 const store = createStore(
     rootReducer,
@@ -27,7 +27,7 @@ persistStore(store)
 render(
     <Provider store={store}>
         <MuiThemeProvider>
-            <App />
+          <MainRouter />
         </MuiThemeProvider>
     </Provider>,
     document.getElementById('root')
