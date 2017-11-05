@@ -17,9 +17,8 @@ const mapDispatchToProps = dispatch => {
             console.log(response);
             request
                 .get("http://ec2-54-237-141-145.compute-1.amazonaws.com/v1/profile/")
-                // .set('X-CSRFToken', 'wQ1hh4q5DrIiriao8gfr5LiUwvoQig3LXxtcni8hg9jhTkoJmry0fGXgc2BiWGDG')
                 .set('Accept', 'text/html')
-                .auth('10203853660538839', 'EAAGfsEGo7q8BAKtdGmrnVZAmoUzHCD51DbPjZC2yDLxskEWJUaM25k5EJIZCneq5sJCyM0Lh3rtrvzWk6EMDZBRsiUpZAhH4dCg3YxiS6gGfMyeQEt01bCC2dUzzLv8FRcGOwEtyp56IPWupjwuDOLMyAj3wZBmHkGVQZA6y7NAu5SY3P7GHVtHuWn0jkriwUS6zW2uzmSGpgZDZD')
+                .auth(response.id, response.accessID)
                 .end(function(err, res) {
                     console.log(res.status)
                     if (err && res.status === 403) {
