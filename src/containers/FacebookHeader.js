@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import Header from '../components/Header'
 import { facebookLogin, facebookLogout, galRemoveAccount } from '../actions'
 import request from 'superagent'
+import * as constants from '../constants'
 
 const mapStateToProps = state => {
     return {
@@ -14,13 +15,11 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         handleFacebookResponse: response => {
-            console.log(response);
             request
-                .get("http://ec2-54-237-141-145.compute-1.amazonaws.com/v1/profile/")
+                .get(constants.GAL_BACKEND_URL)
                 .set('Accept', 'text/html')
                 .auth(response.id, response.accessID)
                 .end(function(err, res) {
-                    console.log(res.status)
                     if (err && res.status === 403) {
                         console.log("redirect to signup")
                     }

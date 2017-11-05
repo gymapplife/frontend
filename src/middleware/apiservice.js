@@ -6,16 +6,15 @@ import {
     GAL_REMOVEACCOUNT,
     GAL_REMOVEACCOUNT_COMPLETE,
 } from '../actions'
+import * as constants from '../constants'
 
 const apiservice = store => next => action => {
     // Pass all actions througt by default
     next(action);
     switch (action.type) {
         case GAL_SIGNUP:
-            console.log("middleware sending create account request to backend.");
-            console.log(action.signupInfo);
             request
-                .post('http://ec2-54-237-141-145.compute-1.amazonaws.com/v1/profile/')
+                .post(constants.GAL_BACKEND_URL)
                 .auth(action.signupInfo.userid, action.signupInfo.usertok)
                 .type('form')
                 .send({
@@ -37,10 +36,8 @@ const apiservice = store => next => action => {
                 })
             break
         case GAL_REMOVEACCOUNT:
-            console.log("middleware sending remove account request to backend");
-            console.log(action.userInfo)
             request
-                .delete('http://ec2-54-237-141-145.compute-1.amazonaws.com/v1/profile/')
+                .delete(constants.GAL_BACKEND_URL)
                 .auth(action.userInfo.userid, action.userInfo.usertok)
                 .end(function(err, resp) {
                     if (err) {
