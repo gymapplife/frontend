@@ -9,6 +9,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import rootReducer from './reducers'
 import 'typeface-roboto'
 import MainRouter from './routes'
+import apiservice from './middleware/apiservice'
 
 const store = createStore(
     rootReducer,
@@ -17,6 +18,7 @@ const store = createStore(
         applyMiddleware(
             thunk,
             logger,
+            apiservice,
         ),
         autoRehydrate()
     )
