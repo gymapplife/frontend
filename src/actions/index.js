@@ -13,18 +13,28 @@ export const GAL_REMOVEACCOUNT_COMPLETE = 'GAL_REMOVEACCOUNT_COMPLETE'
  * action creators
  */
 
-export const galSignup = (goal, experience, weight, height) => {
+export const galSignup = (userid, usertok, goal, experience, weight, height) => {
     return { 
         type: GAL_SIGNUP,
-        goal: goal,
-        experience: experience,
-        weight: weight,
-        height: height
+        signupInfo: {
+            userid: userid, 
+            usertok: usertok,
+            goal: goal,
+            experience: experience,
+            weight: weight,
+            height: height
+        }
     }
 }
 
-export const galRemoveAccount = () => {
-    return { type: GAL_REMOVEACCOUNT }
+export const galRemoveAccount = (userid, usertok) => {
+    return { 
+        type: GAL_REMOVEACCOUNT,
+        userInfo: {
+            userid: userid,
+            usertok: usertok
+        }
+    }
 }
 
 export const facebookLogin = response => {

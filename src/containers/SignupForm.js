@@ -60,8 +60,9 @@ class SignupForm extends React.Component {
             this.setState({showErr: true});
         }
         else {
-            alert("Good form!");
             this.props.doSubmit(
+                this.props.userFacebookInfo.id,
+                this.props.userFacebookInfo.accessToken,
                 this.state.fitnessGoalOption,
                 this.state.experienceLevelOption,
                 this.state.weight,
@@ -130,14 +131,15 @@ class SignupForm extends React.Component {
 const mapStateToProps = state => {
     return {
         loggedIn: state.loggedIn,
-        signedUp: state.signedUp
+        signedUp: state.signedUp,
+        userFacebookInfo: state.userFacebookInfo
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        doSubmit: (goal, experience, wieght, height) => {
-            dispatch(galSignup(goal, experience, wieght, height))
+        doSubmit: (userid, usertok, goal, experience, wieght, height) => {
+            dispatch(galSignup(userid, usertok, goal, experience, wieght, height))
         }
     }
 }

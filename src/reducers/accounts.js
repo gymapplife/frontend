@@ -24,10 +24,13 @@ export const loggedIn = (initialState = false, action) => {
     switch (action.type) {
         case FACEBOOK_LOGIN:
             return Boolean(action.response.id)
+            break
         case FACEBOOK_LOGOUT:
             return false
+            break
         case GAL_REMOVEACCOUNT_COMPLETE:
             return false
+            break
         default:
             return initialState
     }

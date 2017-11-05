@@ -31,8 +31,8 @@ const mapDispatchToProps = dispatch => {
         handleLogout: () => {
             dispatch(facebookLogout());
         },
-        handleRemoveAccount: () => {
-            dispatch(galRemoveAccount());
+        handleRemoveAccount: (userid, usertok) => {
+            dispatch(galRemoveAccount(userid, usertok));
         }
     }
 }

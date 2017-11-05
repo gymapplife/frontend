@@ -30,7 +30,7 @@ const Header = ({ loggedIn, signedUp, userInfo, handleFacebookResponse, handleLo
                     <td><RaisedButton onClick={handleLogout}>
                         Logout
                     </RaisedButton></td>
-                    <td><RaisedButton onClick={handleRemoveAccount}>
+                    <td><RaisedButton onClick={() => handleRemoveAccount(userInfo.id, userInfo.accessToken)}>
                         Remove Account
                     </RaisedButton></td>
                 </tr></table>
