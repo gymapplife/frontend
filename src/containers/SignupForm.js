@@ -1,8 +1,11 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import TextField from 'material-ui/TextField'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
+import {galSignup} from '../actions'
+import { Redirect } from 'react-router-dom'
 
 class SignupForm extends React.Component {
     constructor(props) {
@@ -57,7 +60,14 @@ class SignupForm extends React.Component {
             this.setState({showErr: true});
         }
         else {
-            alert("Good form!");
+            this.props.doSubmit(
+                this.props.userFacebookInfo.id,
+                this.props.userFacebookInfo.accessToken,
+                this.state.fitnessGoalOption,
+                this.state.experienceLevelOption,
+                this.state.weight,
+                this.state.height
+            );
         }
     }
 
@@ -73,7 +83,7 @@ class SignupForm extends React.Component {
 
     render() {
         const { handleSubmit, pristine, reset, submitting } = this.props
-        return (
+        const form = (
             <form onSubmit={this.handleSubmit}>
             <div>
                 <SelectField id="fitnessGoalOption" hintText="Fitness Goals" onChange={this.handleFitnessGoalChange}
@@ -107,9 +117,34 @@ class SignupForm extends React.Component {
             </div>
             </form>
         )
+
+        if (this.props.loggedIn && !this.props.signedUp) {
+            return form
+        } else {
+            return (
+                <Redirect to="/" />
+            )
+        }
     }
 }
 
-export default reduxForm({
-    form: "SignupForm"
-}) (SignupForm)
+const mapStateToProps = state => {
+    return {
+        loggedIn: state.loggedIn,
+        signedUp: state.signedUp,
+        userFacebookInfo: state.userFacebookInfo
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        doSubmit: (userid, usertok, goal, experience, wieght, height) => {
+            dispatch(galSignup(userid, usertok, goal, experience, wieght, height))
+        }
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(SignupForm)

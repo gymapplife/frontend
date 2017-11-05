@@ -1,0 +1,55 @@
+import request from 'superagent'
+import {
+    FACEBOOK_LOGOUT,
+    GAL_SIGNUP,
+    GAL_SIGNUP_COMPLETE,
+    GAL_REMOVEACCOUNT,
+    GAL_REMOVEACCOUNT_COMPLETE,
+} from '../actions'
+import * as constants from '../constants'
+
+const apiservice = store => next => action => {
+    // Pass all actions througt by default
+    next(action);
+    switch (action.type) {
+        case GAL_SIGNUP:
+            request
+                .post(constants.GAL_BACKEND_URL)
+                .auth(action.signupInfo.userid, action.signupInfo.usertok)
+                .type('form')
+                .send({
+                    goal: action.signupInfo.goal,
+                    experience: action.signupInfo.experience,
+                    weight: action.signupInfo.weight,
+                    height: action.signupInfo.height
+                })
+                .end(function(err, resp) {
+                    if (!err) {
+                        next({
+                            type: GAL_SIGNUP_COMPLETE
+                        })
+                    } else {
+                        next({
+                            type: FACEBOOK_LOGOUT
+                        })
+                    }
+                })
+            break
+        case GAL_REMOVEACCOUNT:
+            request
+                .delete(constants.GAL_BACKEND_URL)
+                .auth(action.userInfo.userid, action.userInfo.usertok)
+                .end(function(err, resp) {
+                    if (err) {
+                        console.log(err)
+                    } else {
+                        next({
+                            type: GAL_REMOVEACCOUNT_COMPLETE
+                        })
+                    }
+                })
+            break
+    }
+}
+
+export default apiservice
