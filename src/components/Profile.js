@@ -14,6 +14,9 @@ class Profile extends React.Component {
                 <RaisedButton onClick={() => this.props.handleRemoveAccount(this.props.userInfo.id, this.props.userInfo.accessToken)}>
                     Remove Account
                 </RaisedButton>
+                <RaisedButton onClick={() => this.props.handleLogout()}>
+                    Logout
+                </RaisedButton>
             </Card>
         )
     }

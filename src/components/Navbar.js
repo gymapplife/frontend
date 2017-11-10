@@ -3,12 +3,11 @@ import Paper from 'material-ui/Paper';
 import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation'
 import FontIcon from 'material-ui/FontIcon'
 
-const logoutIcon = <FontIcon className="material-icons">Logout</FontIcon>;
-const workoutIcon = <FontIcon className="material-icons">Workout</FontIcon>;
-const nutritionIcon = <FontIcon className="material-icons">Nutrition</FontIcon>;
-const profileIcon = <FontIcon className="material-icons">Profile</FontIcon>;
-const analyticsIcon = <FontIcon className="material-icons">Analytics</FontIcon>;
-const photosIcon = <FontIcon className="material-icons">Photos</FontIcon>;
+const workoutIcon = <FontIcon>💪</FontIcon>;
+const nutritionIcon = <FontIcon>🍳</FontIcon>;
+const profileIcon = <FontIcon>🤳</FontIcon>;
+const analyticsIcon = <FontIcon>📈</FontIcon>;
+const photosIcon = <FontIcon>📸</FontIcon>;
 
 
 class Navbar extends React.Component {
@@ -18,7 +17,6 @@ class Navbar extends React.Component {
             selectedIdx: 2
         }
 
-        this.logoutClicked = this.logoutClicked.bind(this)
         this.navigationClicked = this.navigationClicked.bind(this)
         this.select = this.select.bind(this)
     }
@@ -42,22 +40,24 @@ class Navbar extends React.Component {
             content = <div />
         } else {
             content = (
-                <BottomNavigation selectedIndex={this.state.selectedIdx}>
-                    <BottomNavigationItem icon={workoutIcon} onClick={() => {this.select(0); this.navigationClicked("workout")}}/>
-                    <BottomNavigationItem icon={nutritionIcon} onClick={() => {this.select(1); this.navigationClicked("nutrition")}}/>
-                    <BottomNavigationItem icon={profileIcon} onClick={() => {this.select(2); this.navigationClicked("profile")}}/>
-                    <BottomNavigationItem icon={analyticsIcon} onClick={() => {this.select(3); this.navigationClicked("analytics")}}/>
-                    <BottomNavigationItem icon={photosIcon} onClick={() => {this.select(4); this.navigationClicked("photos")}}/>
-                    <BottomNavigationItem icon={logoutIcon} onClick={this.logoutClicked}/>
-                </BottomNavigation>
+                <Paper zDepth={1}>
+                    <BottomNavigation selectedIndex={this.state.selectedIdx}>
+                        <BottomNavigationItem label="Workout" icon={workoutIcon}
+                            onClick={() => {this.select(0); this.navigationClicked("workout")}} />
+                        <BottomNavigationItem label="Nutrition" icon={nutritionIcon}
+                            onClick={() => {this.select(1); this.navigationClicked("nutrition")}} />
+                        <BottomNavigationItem label="Profile" icon={profileIcon}
+                            onClick={() => {this.select(2); this.navigationClicked("profile")}} />
+                        <BottomNavigationItem label="Analytics" icon={analyticsIcon}
+                            onClick={() => {this.select(3); this.navigationClicked("analytics")}} />
+                        <BottomNavigationItem label="Photos" icon={photosIcon}
+                            onClick={() => {this.select(4); this.navigationClicked("photos")}} />
+                    </BottomNavigation>
+                </Paper>
             )
         }
 
-        return (
-            <Paper zDepth={1}>
-            {content}
-            </Paper>
-        )
+        return content
     }
 }
 
