@@ -2,6 +2,7 @@ import {
     FACEBOOK_LOGIN,
     FACEBOOK_LOGOUT,
     GAL_SIGNUP_COMPLETE,
+    GAL_REMOVEACCOUNT,
     GAL_REMOVEACCOUNT_COMPLETE,
 } from '../actions'
 
@@ -26,6 +27,7 @@ export const loggedIn = (initialState = false, action) => {
             return Boolean(action.response.id)
         case FACEBOOK_LOGOUT:
             return false
+        case GAL_REMOVEACCOUNT:
         case GAL_REMOVEACCOUNT_COMPLETE:
             return false
         default:
@@ -41,5 +43,6 @@ export const signedUp = (initialState = false, action) => {
             return false;
         default:
             return initialState
-    }
+    } 
+    return true
 }

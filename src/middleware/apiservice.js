@@ -14,7 +14,7 @@ const apiservice = store => next => action => {
     switch (action.type) {
         case GAL_SIGNUP:
             request
-                .post(constants.GAL_BACKEND_URL)
+                .post(constants.GAL_BACKEND_PROFILE_URL)
                 .auth(action.signupInfo.userid, action.signupInfo.usertok)
                 .type('form')
                 .send({
@@ -37,7 +37,7 @@ const apiservice = store => next => action => {
             break
         case GAL_REMOVEACCOUNT:
             request
-                .delete(constants.GAL_BACKEND_URL)
+                .delete(constants.GAL_BACKEND_PROFILE_URL)
                 .auth(action.userInfo.userid, action.userInfo.usertok)
                 .end(function(err, resp) {
                     if (err) {
