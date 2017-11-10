@@ -1,6 +1,6 @@
 import React from 'react';
 import {HashRouter, Route, Switch} from 'react-router-dom';
-import App from './components/App';
+import App from './containers/App';
 import SignupForm from './containers/SignupForm';
 
 const MainRouter = () => (

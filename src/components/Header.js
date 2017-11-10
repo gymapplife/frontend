@@ -7,7 +7,7 @@ import * as constants from '../constants'
 import { Redirect } from 'react-router-dom'
 
 const Header = ({ loggedIn, signedUp, userInfo, handleFacebookResponse, handleLogout, handleRemoveAccount }) => {
-    const loggedOutUser = (
+    return (
         <Card>
             <CardTitle title="Welcome!" />
             <CardText>
@@ -19,34 +19,6 @@ const Header = ({ loggedIn, signedUp, userInfo, handleFacebookResponse, handleLo
             </CardText>
         </Card>
     )
-    const newUser = (
-        <Redirect to="/signup" />
-    )
-    const returningUser = (
-        <Card>
-            <CardTitle title={`Welcome back, ${userInfo.name}!`} />
-            <CardText>
-                <table><tr>
-                    <td><RaisedButton onClick={handleLogout}>
-                        Logout
-                    </RaisedButton></td>
-                    <td><RaisedButton onClick={() => handleRemoveAccount(userInfo.id, userInfo.accessToken)}>
-                        Remove Account
-                    </RaisedButton></td>
-                </tr></table>
-            </CardText>
-        </Card>
-    )
-
-    if (loggedIn) {
-        if (signedUp) {
-            return returningUser
-        } else {
-            return newUser
-        }
-    } else {
-        return loggedOutUser
-    }
 }
 
 Header.propTypes = {
