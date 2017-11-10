@@ -43,9 +43,11 @@ class App extends React.Component {
         }
 
         return (
-            <div>
+            <div className="box">
                 <AppBar title="GymApp.life" />
-                {content}
+                <div className="content">
+                    {content}
+                </div>
                 <Navbar />
             </div>
         )
