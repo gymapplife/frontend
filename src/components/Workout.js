@@ -4,19 +4,22 @@ import RaisedButton from 'material-ui/RaisedButton'
 import request from 'superagent'
 import * as constants from '../constants'
 import SelectWorkoutTable from './SelectWorkoutTable'
+import LogWorkoutForm from './LogWorkoutForm'
 
 class Workout extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             defaultWorkouts: [],
-            selected: [-1]
+            selected: [-1],
+            currentProgramInfo: null,
         }
 
         this.fetchDefaultWorkouts = this.fetchDefaultWorkouts.bind(this)
         this.handleSelection = this.handleSelection.bind(this)
         this.handleSelectWorkout = this.handleSelectWorkout.bind(this)
         this.handleCompleteWorkout = this.handleCompleteWorkout.bind(this)
+        this.handleSubmitLog = this.handleSubmitLog.bind(this)
     }
 
     fetchDefaultWorkouts(err, resp) {
@@ -46,6 +49,14 @@ class Workout extends React.Component {
         this.props.handleCompleteWorkoutProgram(this.props.userInfo.id, this.props.userInfo.accessToken)
     }
 
+    handleSubmitLog(logs) {
+        console.log("submit log", logs)
+    }
+
+    componentWillReceiveProps() {
+        console.log("workout page wcp", this.props.workoutProgramInfo)
+    }
+
     componentWillMount() {
         request
         .get(constants.GAL_BACKEND_WORKOUT_URL)
@@ -72,7 +83,11 @@ class Workout extends React.Component {
         } else {
             content = (
                 <div>
-                    Current workout.
+                    {<LogWorkoutForm 
+                        programInfo={this.props.workoutProgramInfo}
+                        userInfo={this.props.userInfo}
+                        handleSubmitLog={this.handleSubmitLog}
+                    />}
                     <RaisedButton onClick={this.handleCompleteWorkout}> (For debug) Complete </RaisedButton>
                 </div>
             )

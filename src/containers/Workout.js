@@ -8,7 +8,8 @@ const mapStateToProps = state => {
         loggedIn: state.loggedIn,
         signedUp: state.signedUp,
         userProfile: state.userProfileInfo,
-        userInfo: state.userFacebookInfo
+        userInfo: state.userFacebookInfo,
+        workoutProgramInfo: state.workoutProgramInfo
     }
 }
 

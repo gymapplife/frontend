@@ -29,6 +29,7 @@ export const userFacebookInfo = (initialState = {}, action) => {
 export const userProfileInfo = (initialState = {}, action) => {
     switch(action.type) {
         case GAL_GET_PROFILE_COMPLETE:
+            console.log("got profile info.", action.profileInfo)
             return action.profileInfo
         case SELECT_WORKOUT_PROGRAM:
             return Object.assign({}, initialState, {current_workout_program: action.workoutId})

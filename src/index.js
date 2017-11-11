@@ -24,7 +24,7 @@ const store = createStore(
     )
 )
 
-persistStore(store)
+// persistStore(store)
 
 render(
     <Provider store={store}>

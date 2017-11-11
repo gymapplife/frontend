@@ -8,6 +8,7 @@ import {
     GAL_GET_PROFILE,
     GAL_GET_PROFILE_COMPLETE,
     SELECT_WORKOUT_PROGRAM,
+    SELECT_WORKOUT_PROGRAM_COMPLETE,
     COMPLETE_WORKOUT_PROGRAM
 } from '../actions'
 import * as constants from '../constants'
@@ -63,7 +64,6 @@ const apiservice = store => next => action => {
                         next({
                             type: GAL_GET_PROFILE_COMPLETE,
                             profileInfo: profileInfo
-
                         })
                     }
                     else {
@@ -90,8 +90,26 @@ const apiservice = store => next => action => {
                                 current_workout_program: action.workoutId
                             })
                             .end(function(err, resp) {
-                                console.log(resp)
                             })
+                    }
+                })
+            
+            let endpoint = `${constants.GAL_BACKEND_WORKOUT_URL}${action.workoutId}/`
+            console.log("also sending to", endpoint)
+            request
+                .get(endpoint)
+                .query('default')
+                .auth(action.userInfo.userid, action.userInfo.usertok)
+                .end(function(err, resp) {
+                    if (err) {
+                        console.log(err)
+                    } else {
+                        let programInfo = JSON.parse(resp.text)
+                        // console.log(programInfo)
+                        next({
+                            type: SELECT_WORKOUT_PROGRAM_COMPLETE,
+                            programInfo: programInfo
+                        })
                     }
                 })
             break
