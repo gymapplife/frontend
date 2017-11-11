@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Card, CardHeader } from 'material-ui/Card';
+import {Card, CardHeader } from 'material-ui/Card'
 import RaisedButton from 'material-ui/RaisedButton'
 
 class Profile extends React.Component {

@@ -5,13 +5,12 @@ import {Card, CardTitle, CardText} from 'material-ui/Card'
 import RaisedButton from 'material-ui/RaisedButton'
 import * as constants from '../constants'
 import { Redirect } from 'react-router-dom'
-import './App.css'
 
 const Header = ({ loggedIn, signedUp, userInfo, handleFacebookResponse, handleLogout, handleRemoveAccount }) => {
     return (
-        <Card className="home-loggedout">
+        <Card className="home-loggedout home-loggedout--background">
             <div className="home-loggedout--align">
-                <CardTitle className="home-loggedout-text" title="GymApp.life" titleColor="white" titleStyle={{ fontSize: '58px', lineHeight: '72px', }}
+                <CardTitle className="helvetica-text" title="GymApp.life" titleColor="white" titleStyle={{ fontSize: '58px', lineHeight: '72px', }}
                     subtitle="Discover your fitness goals." subtitleColor="white" subtitleStyle={{ fontSize: '24px', fontStyle: 'italic', }} />
                 <CardText>
                     <FacebookLogin
