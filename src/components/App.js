@@ -8,6 +8,7 @@ import Analytics from '../containers/Analytics'
 import Photos from '../containers/Photos'
 import Navbar from '../containers/Navbar'
 import { Redirect } from 'react-router-dom'
+import './App.css'
 
 class App extends React.Component {
 
@@ -44,7 +45,7 @@ class App extends React.Component {
 
         return (
             <div className="box">
-                <AppBar title="GymApp.life" />
+                <AppBar title="GymApp.life" className="header" />
                 <div className="content">
                     {content}
                 </div>
