@@ -23,7 +23,6 @@ class ERow extends React.Component {
     handleCellSelect(event, index, value, set) {
         let s = this.state.values.slice()
         s[set] = value
-        console.log(this.props)
         let d = {
             workoutDayId: this.props.workoutDayId,
             repstring: s.join(",")
@@ -33,12 +32,11 @@ class ERow extends React.Component {
     }
 
     componentWillReceiveProps() {
-        console.log("Erow wcp ", this.props.sets, " ", this.props.reps)
-        // let initValues = []
-        // for (let i=0; i<this.props.sets; i++) {
-        //     initValues.push(this.props.reps)
-        // }
-        // this.setState({values: initValues})
+        let initValues = []
+        for (let i=0; i<this.props.sets; i++) {
+            initValues.push(this.props.reps)
+        }
+        this.setState({values: initValues})
     }
 
     render() {
@@ -72,7 +70,6 @@ class ERow extends React.Component {
 class LogWorkoutForm extends React.Component {
     constructor(props) {
         super(props)
-        console.log(this.props.programInfo)
         let initialLog = []
 
 
@@ -90,8 +87,6 @@ class LogWorkoutForm extends React.Component {
     }
 
     handleWDSelect(event, index, value) {
-        console.log("select wd")
-
         // Reset logs
         let k = value.split(",")
         let week, day
@@ -112,21 +107,19 @@ class LogWorkoutForm extends React.Component {
     }
 
     handleSubmit() {
-        this.props.handleSubmitLog(this.logs)
+        this.props.handleSubmitLog(this.logs, this.state.wd)
     }
 
     handleRepsChange(exlog) {
-        console.log(exlog)
         let wdid = exlog.workoutDayId.toString()
         let repstring = exlog.repstring
         let entry = {}
         entry[wdid] = repstring
         this.logs = Object.assign(this.logs, entry)
-        console.log(this.logs)
     }
 
     alreadySubmitted() {
-        return false
+        return this.props.submittedDays.indexOf(this.state.wd) > -1
     }
 
     componentDidMount() {
@@ -140,10 +133,6 @@ class LogWorkoutForm extends React.Component {
             }
             this.logs[exercise.id.toString()] = l.join(",")
         }
-    }
-
-    componentWillReceiveProps(nextprops) {
-        console.log("lwf wcp", nextprops)
     }
 
     render() {
@@ -169,7 +158,6 @@ class LogWorkoutForm extends React.Component {
         week = k[1]
         day = k[3]
         let exercises = this.props.programInfo.weeks[week][day]
-        // console.log(exercises)
 
         const eForms = exercises.map((ex, idx) => (
             <ERow
@@ -181,15 +169,25 @@ class LogWorkoutForm extends React.Component {
             />
         ))
 
-        return (
+        let content
+        if (this.props.submittedDays.indexOf(this.state.wd) > -1) {
+            content = <h2> Submitted! </h2>
+        } else {
+            content = (
+                <div>
+                    {eForms}
+                    <RaisedButton onClick={this.handleSubmit}> Submit </RaisedButton>
+                </div>
+            )
+        }
 
+        return (
             <div>
                 <h1> {this.props.programInfo.program.name} </h1>
                 <DropDownMenu maxHeight={300} value={this.state.wd} onChange={this.handleWDSelect}>
                     {dateItems}
                 </DropDownMenu>
-                {eForms}
-                <RaisedButton onClick={this.handleSubmit} disabled={this.alreadySubmitted()}> Submit </RaisedButton>
+                {content}
             </div>
         )
     }

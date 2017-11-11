@@ -13,6 +13,7 @@ export const GAL_GET_PROFILE_COMPLETE = 'GAL_GET_PROFILE_COMPLETE'
 export const SELECT_WORKOUT_PROGRAM = 'SELECT_WORKOUT_PROGRAM'
 export const SELECT_WORKOUT_PROGRAM_COMPLETE = 'SELECT_WORKOUT_PROGRAM_COMPLETE'
 export const COMPLETE_WORKOUT_PROGRAM = 'COMPLETE_WORKOUT_PROGRAM'
+export const SUBMIT_WORKOUT_DAY = 'SUBMIT_WORKOUT_DAY'
 
 export const NAVIGATE_TO_PAGE = "NAVIGATE_TO_PAGE"
 
@@ -89,4 +90,8 @@ export const completeWorkoutProgram = (userid, usertok) => {
             usertok: usertok
         }
     }
+}
+
+export const submitWorkDay = (logs, wd) => {
+    return {type: SUBMIT_WORKOUT_DAY, logs: logs, workday: wd}
 }

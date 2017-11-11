@@ -1,14 +1,13 @@
 import {
-    SELECT_WORKOUT_PROGRAM_COMPLETE
-
+    SELECT_WORKOUT_PROGRAM_COMPLETE,
+    SUBMIT_WORKOUT_DAY,
+    COMPLETE_WORKOUT_PROGRAM,
 } from "../actions"
 
 export const workoutProgramInfo = (initialState = {}, action) => {
     switch(action.type) {
         case SELECT_WORKOUT_PROGRAM_COMPLETE:
-            console.log("workout reduer received select workout program complete action", action.programInfo)
             return action.programInfo
-            // return {word: 'hi'}
         default:
             return initialState
     }
@@ -16,6 +15,13 @@ export const workoutProgramInfo = (initialState = {}, action) => {
 
 export const submitted = (initialState = [], action) => {
     switch(action.type) {
-
+        case SUBMIT_WORKOUT_DAY:
+            let nextstate = initialState.slice()
+            nextstate.push(action.workday)
+            return nextstate
+        case COMPLETE_WORKOUT_PROGRAM:
+            return []
+        default:
+            return initialState
     }
 }

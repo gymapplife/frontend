@@ -95,7 +95,6 @@ const apiservice = store => next => action => {
                 })
             
             let endpoint = `${constants.GAL_BACKEND_WORKOUT_URL}${action.workoutId}/`
-            console.log("also sending to", endpoint)
             request
                 .get(endpoint)
                 .query('default')
@@ -105,7 +104,6 @@ const apiservice = store => next => action => {
                         console.log(err)
                     } else {
                         let programInfo = JSON.parse(resp.text)
-                        // console.log(programInfo)
                         next({
                             type: SELECT_WORKOUT_PROGRAM_COMPLETE,
                             programInfo: programInfo
@@ -132,7 +130,6 @@ const apiservice = store => next => action => {
                             current_workout_program: null
                         })
                         .end(function(err, resp) {
-                            console.log(resp)
                         })
                 }
             })

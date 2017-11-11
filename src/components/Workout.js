@@ -49,12 +49,8 @@ class Workout extends React.Component {
         this.props.handleCompleteWorkoutProgram(this.props.userInfo.id, this.props.userInfo.accessToken)
     }
 
-    handleSubmitLog(logs) {
-        console.log("submit log", logs)
-    }
-
-    componentWillReceiveProps() {
-        console.log("workout page wcp", this.props.workoutProgramInfo)
+    handleSubmitLog(logs, wd) {
+        this.props.submitWorkDay(logs, wd)
     }
 
     componentWillMount() {
@@ -80,6 +76,16 @@ class Workout extends React.Component {
                     <RaisedButton onClick={this.handleSelectWorkout}> Continue </RaisedButton>
                 </div>
             )
+        }
+        else if (!this.props.workoutProgramInfo.program) {
+            content = (
+                <div> Loading </div>
+            )
+            this.props.handleSelectWorkoutProgram (
+                this.props.userProfile.current_workout_program, 
+                this.props.userInfo.id, 
+                this.props.userInfo.accessToken
+            )
         } else {
             content = (
                 <div>
@@ -87,8 +93,9 @@ class Workout extends React.Component {
                         programInfo={this.props.workoutProgramInfo}
                         userInfo={this.props.userInfo}
                         handleSubmitLog={this.handleSubmitLog}
+                        submittedDays={this.props.submittedDays}
                     />}
-                    <RaisedButton onClick={this.handleCompleteWorkout}> (For debug) Complete </RaisedButton>
+                    <RaisedButton onClick={this.handleCompleteWorkout}> Choose Another Workout </RaisedButton>
                 </div>
             )
         }
