@@ -5,6 +5,10 @@ import {
     GAL_SIGNUP_COMPLETE,
     GAL_REMOVEACCOUNT,
     GAL_REMOVEACCOUNT_COMPLETE,
+    GAL_GET_PROFILE,
+    GAL_GET_PROFILE_COMPLETE,
+    SELECT_WORKOUT_PROGRAM,
+    COMPLETE_WORKOUT_PROGRAM
 } from '../actions'
 import * as constants from '../constants'
 
@@ -49,6 +53,72 @@ const apiservice = store => next => action => {
                     }
                 })
             break
+        case GAL_GET_PROFILE:
+            request
+                .get(constants.GAL_BACKEND_PROFILE_URL)
+                .auth(action.userInfo.userid, action.userInfo.usertok)
+                .end(function(err, resp) {
+                    if (!err) {
+                        let profileInfo = JSON.parse(resp.text)
+                        next({
+                            type: GAL_GET_PROFILE_COMPLETE,
+                            profileInfo: profileInfo
+
+                        })
+                    }
+                    else {
+                        console.log(err)
+                    }
+                })
+            break
+        case SELECT_WORKOUT_PROGRAM:
+            request
+                .get(constants.GAL_BACKEND_PROFILE_URL)
+                .auth(action.userInfo.userid, action.userInfo.usertok)
+                .end(function(err, resp) {
+                    if (!err) {
+                        let profileInfo = JSON.parse(resp.text)
+                        
+                        request
+                            .patch(constants.GAL_BACKEND_PROFILE_URL)
+                            .auth(action.userInfo.userid, action.userInfo.usertok)
+                            .send({
+                                goal: profileInfo.goal,
+                                experience: profileInfo.experience,
+                                weight: profileInfo.weight,
+                                height: profileInfo.height,
+                                current_workout_program: action.workoutId
+                            })
+                            .end(function(err, resp) {
+                                console.log(resp)
+                            })
+                    }
+                })
+            break
+        case COMPLETE_WORKOUT_PROGRAM:
+            request
+            .get(constants.GAL_BACKEND_PROFILE_URL)
+            .auth(action.userInfo.userid, action.userInfo.usertok)
+            .end(function(err, resp) {
+                if (!err) {
+                    let profileInfo = JSON.parse(resp.text)
+                    
+                    request
+                        .patch(constants.GAL_BACKEND_PROFILE_URL)
+                        .auth(action.userInfo.userid, action.userInfo.usertok)
+                        .send({
+                            goal: profileInfo.goal,
+                            experience: profileInfo.experience,
+                            weight: profileInfo.weight,
+                            height: profileInfo.height,
+                            current_workout_program: null
+                        })
+                        .end(function(err, resp) {
+                            console.log(resp)
+                        })
+                }
+            })
+        break
     }
 }
 

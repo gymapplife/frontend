@@ -28,6 +28,8 @@ const mapDispatchToProps = dispatch => {
                         dispatch(galConfirmSignedUp())
                     }
                 })
+            console.log('facebook resp')
+            console.log(response)
             dispatch(facebookLogin(response));
         },
         handleLogout: () => {

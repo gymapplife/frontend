@@ -4,6 +4,9 @@ import {
     GAL_SIGNUP_COMPLETE,
     GAL_REMOVEACCOUNT,
     GAL_REMOVEACCOUNT_COMPLETE,
+    GAL_GET_PROFILE_COMPLETE,
+    SELECT_WORKOUT_PROGRAM,
+    COMPLETE_WORKOUT_PROGRAM,
 } from '../actions'
 
 export const userFacebookInfo = (initialState = {}, action) => {
@@ -12,10 +15,25 @@ export const userFacebookInfo = (initialState = {}, action) => {
             return {
                 id: action.response.id,
                 name: action.response.name,
-                accessToken: action.response.accessToken
+                accessToken: action.response.accessToken,
+                age: action.response.age_range.min,
+                pictureUrl: action.response.picture.data.url
             }
         case FACEBOOK_LOGOUT:
             return {}
+        default:
+            return initialState
+    }
+}
+
+export const userProfileInfo = (initialState = {}, action) => {
+    switch(action.type) {
+        case GAL_GET_PROFILE_COMPLETE:
+            return action.profileInfo
+        case SELECT_WORKOUT_PROGRAM:
+            return Object.assign({}, initialState, {current_workout_program: action.workoutId})
+        case COMPLETE_WORKOUT_PROGRAM:
+            return Object.assign({}, initialState, {current_workout_program: null})
         default:
             return initialState
     }
