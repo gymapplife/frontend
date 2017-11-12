@@ -14,10 +14,12 @@ class ERow extends React.Component {
             initValues.push(this.props.reps)
         }
         this.state = {
-            values: initValues
+            values: initValues,
+            exname: "loading"
         }
 
         this.handleCellSelect = this.handleCellSelect.bind(this)
+        this.setExersiseName = this.setExersiseName.bind(this)
     }
 
     handleCellSelect(event, index, value, set) {
@@ -37,6 +39,20 @@ class ERow extends React.Component {
             initValues.push(this.props.reps)
         }
         this.setState({values: initValues})
+        console.log('') // need this here for some reason or the exercise names don't resolve
+        request
+            .get(constants.GAL_BACKEND_EXERSISE_URL + this.props.exid + '/')
+            .auth(this.props.userInfo.id, this.props.userInfo.accessToken)
+            .end(this.setExersiseName)
+    }
+
+    setExersiseName(err, resp) {
+        if (err) {
+            console.log(err)
+        } else {
+            let obj = JSON.parse(resp.text)
+            this.setState({exname: obj.name})
+        }
     }
 
     render() {
@@ -59,10 +75,21 @@ class ERow extends React.Component {
             )
         }
 
+        let instructions
+        if (this.props.weight == 0) {
+            instructions = <h3> {this.props.sets} x {this.props.reps} </h3>
+        } else {
+            instructions = <h3> {this.props.sets} x {this.props.reps} {this.props.weight} lbs </h3>
+        }
+
         return (
-            <GridList cols={sets}>
-                {eRow}
-            </GridList>
+            <div>
+                <h2>{this.state.exname}</h2>
+                {instructions}
+                <GridList cols={sets}>
+                    {eRow}
+                </GridList>
+            </div>
         )
     }
 }
@@ -164,6 +191,9 @@ class LogWorkoutForm extends React.Component {
                 key={idx}
                 sets={ex.sets}
                 reps={ex.reps}
+                weight={ex.weight}
+                exid={ex.exercise}
+                userInfo={this.props.userInfo}
                 handleRepsChange={this.handleRepsChange}
                 workoutDayId={ex.id}
             />

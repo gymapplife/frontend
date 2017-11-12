@@ -50,7 +50,7 @@ class Workout extends React.Component {
     }
 
     handleSubmitLog(logs, wd) {
-        this.props.submitWorkDay(logs, wd)
+        this.props.submitWorkDay(logs, wd, this.props.userInfo.id, this.props.userInfo.accessToken)
     }
 
     componentWillMount() {

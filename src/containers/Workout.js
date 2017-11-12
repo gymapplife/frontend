@@ -22,8 +22,8 @@ const mapDispatchToProps = dispatch => {
         handleCompleteWorkoutProgram: (userid, usertok) => {
             dispatch(completeWorkoutProgram(userid, usertok))
         },
-        submitWorkDay: (logs, wd) => {
-            dispatch(submitWorkDay(logs, wd))
+        submitWorkDay: (logs, wd, userid, usertok) => {
+            dispatch(submitWorkDay(logs, wd, userid, usertok))
         }
     }
 }

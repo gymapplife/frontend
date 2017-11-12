@@ -9,7 +9,8 @@ import {
     GAL_GET_PROFILE_COMPLETE,
     SELECT_WORKOUT_PROGRAM,
     SELECT_WORKOUT_PROGRAM_COMPLETE,
-    COMPLETE_WORKOUT_PROGRAM
+    COMPLETE_WORKOUT_PROGRAM,
+    SUBMIT_WORKOUT_DAY,
 } from '../actions'
 import * as constants from '../constants'
 
@@ -133,6 +134,30 @@ const apiservice = store => next => action => {
                         })
                 }
             })
+            break
+        case SUBMIT_WORKOUT_DAY:
+            for (var day_id in action.logs) {
+                let body = {
+                    workout_day: parseInt(day_id),
+                    reps: action.logs[day_id]
+                }
+                console.log("sending body", body)
+
+                request
+                    .put(constants.GAL_BACKEND_WORKOUT_LOGS_URL)
+                    .type('form')
+                    .auth(action.userInfo.userid, action.userInfo.usertok)
+                    .query("default")
+                    .send(body)
+                    .end(function(err, resp) {
+                        if (err) {
+                            console.log(err)
+                        } else {
+                            console.log(resp)
+                        }
+                    })
+            }
+            
         break
     }
 }

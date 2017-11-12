@@ -92,6 +92,14 @@ export const completeWorkoutProgram = (userid, usertok) => {
     }
 }
 
-export const submitWorkDay = (logs, wd) => {
-    return {type: SUBMIT_WORKOUT_DAY, logs: logs, workday: wd}
+export const submitWorkDay = (logs, wd, userid, usertok) => {
+    return {
+        type: SUBMIT_WORKOUT_DAY, 
+        logs: logs, 
+        workday: wd,
+        userInfo: {
+            userid: userid,
+            usertok: usertok
+        }
+    }
 }
