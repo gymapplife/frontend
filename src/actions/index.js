@@ -11,7 +11,9 @@ export const GAL_REMOVEACCOUNT_COMPLETE = 'GAL_REMOVEACCOUNT_COMPLETE'
 export const GAL_GET_PROFILE = 'GAL_GET_PROFILE'
 export const GAL_GET_PROFILE_COMPLETE = 'GAL_GET_PROFILE_COMPLETE'
 export const SELECT_WORKOUT_PROGRAM = 'SELECT_WORKOUT_PROGRAM'
+export const SELECT_WORKOUT_PROGRAM_COMPLETE = 'SELECT_WORKOUT_PROGRAM_COMPLETE'
 export const COMPLETE_WORKOUT_PROGRAM = 'COMPLETE_WORKOUT_PROGRAM'
+export const SUBMIT_WORKOUT_DAY = 'SUBMIT_WORKOUT_DAY'
 
 export const NAVIGATE_TO_PAGE = "NAVIGATE_TO_PAGE"
 
@@ -83,6 +85,18 @@ export const selectWorkoutProgram = (workoutId, userid, usertok) => {
 export const completeWorkoutProgram = (userid, usertok) => {
     return {
         type: COMPLETE_WORKOUT_PROGRAM,
+        userInfo: {
+            userid: userid,
+            usertok: usertok
+        }
+    }
+}
+
+export const submitWorkDay = (logs, wd, userid, usertok) => {
+    return {
+        type: SUBMIT_WORKOUT_DAY, 
+        logs: logs, 
+        workday: wd,
         userInfo: {
             userid: userid,
             usertok: usertok

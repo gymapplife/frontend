@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import workoutcomponent from '../components/Workout'
-import { selectWorkoutProgram, completeWorkoutProgram } from '../actions'
+import { selectWorkoutProgram, completeWorkoutProgram, submitWorkDay } from '../actions'
 
 const mapStateToProps = state => {
     return {
         loggedIn: state.loggedIn,
         signedUp: state.signedUp,
         userProfile: state.userProfileInfo,
-        userInfo: state.userFacebookInfo
+        userInfo: state.userFacebookInfo,
+        workoutProgramInfo: state.workoutProgramInfo,
+        submittedDays: state.submitted
     }
 }
 
@@ -19,6 +21,9 @@ const mapDispatchToProps = dispatch => {
         },
         handleCompleteWorkoutProgram: (userid, usertok) => {
             dispatch(completeWorkoutProgram(userid, usertok))
+        },
+        submitWorkDay: (logs, wd, userid, usertok) => {
+            dispatch(submitWorkDay(logs, wd, userid, usertok))
         }
     }
 }

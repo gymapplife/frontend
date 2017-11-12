@@ -5,7 +5,7 @@ import {
     GAL_REMOVEACCOUNT,
     GAL_REMOVEACCOUNT_COMPLETE,
     GAL_GET_PROFILE_COMPLETE,
-    SELECT_WORKOUT_PROGRAM,
+    SELECT_WORKOUT_PROGRAM_COMPLETE,
     COMPLETE_WORKOUT_PROGRAM,
 } from '../actions'
 
@@ -30,8 +30,8 @@ export const userProfileInfo = (initialState = {}, action) => {
     switch(action.type) {
         case GAL_GET_PROFILE_COMPLETE:
             return action.profileInfo
-        case SELECT_WORKOUT_PROGRAM:
-            return Object.assign({}, initialState, {current_workout_program: action.workoutId})
+        case SELECT_WORKOUT_PROGRAM_COMPLETE:
+            return Object.assign({}, initialState, {current_workout_program: action.programInfo.program.id})
         case COMPLETE_WORKOUT_PROGRAM:
             return Object.assign({}, initialState, {current_workout_program: null})
         default:

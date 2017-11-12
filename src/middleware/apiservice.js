@@ -8,7 +8,9 @@ import {
     GAL_GET_PROFILE,
     GAL_GET_PROFILE_COMPLETE,
     SELECT_WORKOUT_PROGRAM,
-    COMPLETE_WORKOUT_PROGRAM
+    SELECT_WORKOUT_PROGRAM_COMPLETE,
+    COMPLETE_WORKOUT_PROGRAM,
+    SUBMIT_WORKOUT_DAY,
 } from '../actions'
 import * as constants from '../constants'
 
@@ -63,7 +65,6 @@ const apiservice = store => next => action => {
                         next({
                             type: GAL_GET_PROFILE_COMPLETE,
                             profileInfo: profileInfo
-
                         })
                     }
                     else {
@@ -90,8 +91,24 @@ const apiservice = store => next => action => {
                                 current_workout_program: action.workoutId
                             })
                             .end(function(err, resp) {
-                                console.log(resp)
                             })
+                    }
+                })
+            
+            let endpoint = `${constants.GAL_BACKEND_WORKOUT_URL}${action.workoutId}/`
+            request
+                .get(endpoint)
+                .query('default')
+                .auth(action.userInfo.userid, action.userInfo.usertok)
+                .end(function(err, resp) {
+                    if (err) {
+                        console.log(err)
+                    } else {
+                        let programInfo = JSON.parse(resp.text)
+                        next({
+                            type: SELECT_WORKOUT_PROGRAM_COMPLETE,
+                            programInfo: programInfo
+                        })
                     }
                 })
             break
@@ -114,10 +131,32 @@ const apiservice = store => next => action => {
                             current_workout_program: null
                         })
                         .end(function(err, resp) {
-                            console.log(resp)
                         })
                 }
             })
+            break
+        case SUBMIT_WORKOUT_DAY:
+            for (var day_id in action.logs) {
+                let body = {
+                    workout_day: parseInt(day_id),
+                    reps: action.logs[day_id]
+                }
+
+                request
+                    .put(constants.GAL_BACKEND_WORKOUT_LOGS_URL)
+                    .type('form')
+                    .auth(action.userInfo.userid, action.userInfo.usertok)
+                    .query("default")
+                    .send(body)
+                    .end(function(err, resp) {
+                        if (err) {
+                            console.log(err)
+                        } else {
+                            // console.log(resp)
+                        }
+                    })
+            }
+            
         break
     }
 }
