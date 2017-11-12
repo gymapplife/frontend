@@ -61,8 +61,6 @@ class CustomWorkoutForm extends React.Component {
     constructor(props) {
         super(props)
 
-        console.log(props)
-
         this.state = {
             numExercises: 1,
             exfields: [{
@@ -152,8 +150,8 @@ class CustomWorkoutForm extends React.Component {
         if (err) {
             console.log(err)
         } else {
-            console.log(resp.text)
-            this.props.completeForm()
+            let obj = JSON.parse(resp.text)
+            this.props.completeForm(obj.program)
         }
     }
 
@@ -189,8 +187,6 @@ class CustomWorkoutForm extends React.Component {
                 name: this.state.exname,
                 days: JSON.stringify(days)
             }
-
-            console.log(body)
 
             request
                 .post(constants.GAL_BACKEND_WORKOUT_URL)

@@ -73,7 +73,6 @@ const apiservice = store => next => action => {
                 })
             break
         case SELECT_WORKOUT_PROGRAM:
-            console.log("iscustom?", action.isCustom)
 
             request
                 .get(constants.GAL_BACKEND_PROFILE_URL)
@@ -105,7 +104,6 @@ const apiservice = store => next => action => {
                                 if (err) {
                                     console.log(err)
                                 } else {
-                                    console.log(resp)
                                 }
                             })
                     }
@@ -172,7 +170,6 @@ const apiservice = store => next => action => {
                         if (err) {
                             console.log(err)
                         } else {
-                            // console.log(resp)
                         }
                     })
             }

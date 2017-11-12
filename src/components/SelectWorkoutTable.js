@@ -15,10 +15,6 @@ class SelectWorkoutTable extends React.Component {
         this.isSelected = this.isSelected.bind(this)
     }
 
-    componentWillReceiveProps() {
-        console.log("wktb will recprop")
-    }
-
     isSelected(index) {
         return this.props.selected.indexOf(index) !== -1;
     }

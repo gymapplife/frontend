@@ -11,15 +11,21 @@ class Workout extends React.Component {
     constructor(props) {
         super(props)
 
+        // this.state = {
+        //     defaultInfo: {
+        //         workoutList: [],
+        //         selected: [-1]
+        //     },
+        //     customWorkoutList: [],
+        //     customSelected: [-1],
+        //     creatingCustom: false
+        // }
+
         this.state = {
-            defaultInfo: {
-                workoutList: [],
-                selected: [-1]
-            },
-            customInfo: {
-                workoutList: [],
-                selected: [-1]
-            },
+            defaultWorkoutList: [],
+            defaultSelected: [-1],
+            customWorkoutList: [],
+            customSelected: [-1],
             creatingCustom: false
         }
 
@@ -33,6 +39,7 @@ class Workout extends React.Component {
         this.handleCompleteWorkout = this.handleCompleteWorkout.bind(this)
         this.handleSubmitLog = this.handleSubmitLog.bind(this)
         this.handleExitCustomWorkout = this.handleExitCustomWorkout.bind(this)
+        this.handleNewCustomWorkout = this.handleNewCustomWorkout.bind(this)
     }
 
     fetchWorkouts(err, resp) {
@@ -40,42 +47,34 @@ class Workout extends React.Component {
             console.log(err)
         } else {
             let obj = JSON.parse(resp.text)
-            let newDefaultInfo = Object.assign({}, this.state.defaultInfo, {workoutList: obj.default})
-            this.setState({defaultInfo: newDefaultInfo})
-
-            let newCustomInfo = Object.assign({}, this.state.customInfo, {workoutList: obj.custom})
-            this.setState({customInfo: newCustomInfo})
+            this.setState({defaultWorkoutList: obj.default})
+            this.setState({customWorkoutList: obj.custom})
         }
     }
 
     handleDefaultSelection(selection) {
         if (selection.length == 1) {
-            let newDefaultInfo = Object.assign({}, this.state.defaultInfo, {selected: selection})
-            this.setState({
-                defaultInfo: newDefaultInfo
-            })
+            this.setState({defaultSelected: selection})
         }
     }
     
     handleCustomSelection(selection) {
         if (selection.length == 1) {
-            let newCustomInfo = Object.assign({}, this.state.customInfo, {selected: selection})
-            this.setState({
-                customInfo: newCustomInfo
-            })
+            this.setState({ customSelected: selection})
         }
+        console.log(this.state)
     }
 
     handleSelectDefaultWorkout() {
-        let idx = this.state.defaultInfo.selected[0]
-        let id = this.state.defaultInfo.workoutList[idx].id
+        let idx = this.state.defaultSelected[0]
+        let id = this.state.defaultWorkoutList[idx].id
         this.props.handleSelectWorkoutProgram(id, false, this.props.userInfo.id, this.props.userInfo.accessToken)
     }
 
     handleSelectCustomWorkout() {
-        let idx = this.state.customInfo.selected[0]
-        if (idx < this.state.customInfo.workoutList.length) {
-            let id = this.state.customInfo.workoutList[idx].id
+        let idx = this.state.customSelected[0]
+        if (idx < this.state.customWorkoutList.length) {
+            let id = this.state.customWorkoutList[idx].id
             this.props.handleSelectWorkoutProgram(id, true, this.props.userInfo.id, this.props.userInfo.accessToken)
         } else {
             this.setState({creatingCustom: true})
@@ -83,29 +82,23 @@ class Workout extends React.Component {
     }
 
     handleDeleteCustomWorkout() {
-        let idx = this.state.customInfo.selected[0]
-        let id = this.state.customInfo.workoutList[idx].id
-
-        console.log("deleting custom workout id ", id)
+        let idx = this.state.customSelected[0]
+        let id = this.state.customWorkoutList[idx].id
 
         request
             .delete(constants.GAL_BACKEND_WORKOUT_URL + id + '/')
             .auth(this.props.userInfo.id, this.props.userInfo.accessToken)
             .end(this.handleRemoveWorkoutFromList)
 
-        let newlist = this.state.customInfo.workoutList.slice()
-        console.log("before", newlist)
+        let newlist = this.state.customWorkoutList.slice()
         newlist.splice(idx, 1)
-        console.log("after", newlist)
-        let newCustomInfo = Object.assign({}, this.state.customInfo, {workoutlist: newlist})
-        this.setState({customInfo: newCustomInfo})
+        this.setState({customWorkoutList: newlist})
     }
 
     handleRemoveWorkoutFromList(err, resp) {
         if (err) {
             console.log(err)
         } else {
-            console.log(resp)
         }
     }
 
@@ -121,6 +114,12 @@ class Workout extends React.Component {
         this.setState({creatingCustom: false})
     }
 
+    handleNewCustomWorkout(program) {
+        let newlist = this.state.customWorkoutList.slice()
+        newlist.push(program)
+        this.setState({customWorkoutList: newlist, creatingCustom: false})
+    }
+
     componentDidMount() {
         request
         .get(constants.GAL_BACKEND_WORKOUT_URL)
@@ -129,8 +128,8 @@ class Workout extends React.Component {
     }
 
     render() {
-        const defaultWorkouts = this.state.defaultInfo.workoutList
-        const customWorkouts = this.state.customInfo.workoutList
+        const defaultWorkouts = this.state.defaultWorkoutList
+        const customWorkouts = this.state.customWorkoutList
         let content
 
         if (this.props.userProfile.current_workout_program === null) {
@@ -142,7 +141,7 @@ class Workout extends React.Component {
                     <SelectWorkoutTable 
                         workouts={defaultWorkouts}
                         handleSelection={this.handleDefaultSelection}
-                        selected={this.state.defaultInfo.selected}
+                        selected={this.state.defaultSelected}
                         isCustom={false}
                     />
                     <RaisedButton onClick={this.handleSelectDefaultWorkout}> Continue </RaisedButton>
@@ -151,11 +150,14 @@ class Workout extends React.Component {
                     <SelectWorkoutTable
                         workouts={customWorkouts}
                         handleSelection={this.handleCustomSelection}
-                        selected={this.state.customInfo.selected}
+                        selected={this.state.customSelected}
                         isCustom={true}
                     />
                     <RaisedButton onClick={this.handleSelectCustomWorkout}> Continue </RaisedButton>
-                    <RaisedButton onClick={this.handleDeleteCustomWorkout}> Delete </RaisedButton>
+                    <RaisedButton 
+                        onClick={this.handleDeleteCustomWorkout}
+                        disabled={this.state.customSelected[0] == this.state.customWorkoutList.length || this.state.customWorkoutList.length == 0}
+                    > Delete </RaisedButton>
                 </div>
                 )
             } else {
@@ -163,7 +165,7 @@ class Workout extends React.Component {
                     <div>
                         <CustomWorkoutForm 
                             userInfo={this.props.userInfo}
-                            completeForm={this.handleExitCustomWorkout}
+                            completeForm={this.handleNewCustomWorkout}
                         />
                         <RaisedButton onClick={this.handleExitCustomWorkout}> Cancel </RaisedButton>
                     </div>
