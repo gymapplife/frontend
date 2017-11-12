@@ -39,7 +39,9 @@ class ERow extends React.Component {
             initValues.push(this.props.reps)
         }
         this.setState({values: initValues})
-        console.log('') // need this here for some reason or the exercise names don't resolve
+    }
+
+    componentDidMount() {
         request
             .get(constants.GAL_BACKEND_EXERSISE_URL + this.props.exid + '/')
             .auth(this.props.userInfo.id, this.props.userInfo.accessToken)

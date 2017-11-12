@@ -141,7 +141,6 @@ const apiservice = store => next => action => {
                     workout_day: parseInt(day_id),
                     reps: action.logs[day_id]
                 }
-                console.log("sending body", body)
 
                 request
                     .put(constants.GAL_BACKEND_WORKOUT_LOGS_URL)
@@ -153,7 +152,7 @@ const apiservice = store => next => action => {
                         if (err) {
                             console.log(err)
                         } else {
-                            console.log(resp)
+                            // console.log(resp)
                         }
                     })
             }
