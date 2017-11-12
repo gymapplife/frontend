@@ -73,6 +73,7 @@ const apiservice = store => next => action => {
                 })
             break
         case SELECT_WORKOUT_PROGRAM:
+
             request
                 .get(constants.GAL_BACKEND_PROFILE_URL)
                 .auth(action.userInfo.userid, action.userInfo.usertok)
@@ -80,25 +81,42 @@ const apiservice = store => next => action => {
                     if (!err) {
                         let profileInfo = JSON.parse(resp.text)
                         
+                        let body = {
+                            goal: profileInfo.goal,
+                            experience: profileInfo.experience,
+                            weight: profileInfo.weight,
+                            height: profileInfo.height,
+                        }
+
+                        if (action.isCustom) {
+                            body.current_workout_program = null
+                            body.current_custom_workout_program = action.workoutId
+                        } else {
+                            body.current_workout_program = action.workoutId
+                            body.current_custom_workout_program = null
+                        }
+
                         request
                             .patch(constants.GAL_BACKEND_PROFILE_URL)
                             .auth(action.userInfo.userid, action.userInfo.usertok)
-                            .send({
-                                goal: profileInfo.goal,
-                                experience: profileInfo.experience,
-                                weight: profileInfo.weight,
-                                height: profileInfo.height,
-                                current_workout_program: action.workoutId
-                            })
+                            .send(body)
                             .end(function(err, resp) {
+                                if (err) {
+                                    console.log(err)
+                                } else {
+                                }
                             })
                     }
                 })
             
             let endpoint = `${constants.GAL_BACKEND_WORKOUT_URL}${action.workoutId}/`
+            let q = 'default'
+            if (action.isCustom) {
+                q = 'custom'
+            }
             request
                 .get(endpoint)
-                .query('default')
+                .query(q)
                 .auth(action.userInfo.userid, action.userInfo.usertok)
                 .end(function(err, resp) {
                     if (err) {
@@ -152,7 +170,6 @@ const apiservice = store => next => action => {
                         if (err) {
                             console.log(err)
                         } else {
-                            // console.log(resp)
                         }
                     })
             }

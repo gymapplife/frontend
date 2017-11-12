@@ -71,10 +71,11 @@ export const navigateTo = (page) => {
     return { type: NAVIGATE_TO_PAGE, to: page }
 }
 
-export const selectWorkoutProgram = (workoutId, userid, usertok) => {
+export const selectWorkoutProgram = (workoutId, isCustom, userid, usertok) => {
     return {
         type: SELECT_WORKOUT_PROGRAM,
         workoutId: workoutId,
+        isCustom: isCustom, 
         userInfo: {
             userid: userid,
             usertok: usertok

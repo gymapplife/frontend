@@ -21,6 +21,16 @@ class SelectWorkoutTable extends React.Component {
 
       render() {
         const workouts = this.props.workouts
+        let customRow
+        if (this.props.isCustom) {
+            customRow = (
+                <TableRow selected={this.isSelected(workouts.length)}>
+                    <TableRowColumn></TableRowColumn>
+                    <TableRowColumn>Create Custom Workout</TableRowColumn>
+                    <TableRowColumn></TableRowColumn>
+                </TableRow>
+            )
+        }
 
           return (
             <Table onRowSelection={this.props.handleSelection}>
@@ -28,7 +38,7 @@ class SelectWorkoutTable extends React.Component {
               <TableRow>
                 <TableHeaderColumn></TableHeaderColumn>
                 <TableHeaderColumn>Name</TableHeaderColumn>
-                <TableHeaderColumn>Status</TableHeaderColumn>
+                <TableHeaderColumn>Description</TableHeaderColumn>
               </TableRow>
             </TableHeader>
               <TableBody>
@@ -39,6 +49,7 @@ class SelectWorkoutTable extends React.Component {
                         <TableRowColumn> {workout.description} </TableRowColumn>
                     </TableRow>
                 ))}
+                {customRow}
               </TableBody>
             </Table>
           )

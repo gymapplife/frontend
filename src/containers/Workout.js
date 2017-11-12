@@ -16,8 +16,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        handleSelectWorkoutProgram: (workoutid, userid, usertok) => {
-            dispatch(selectWorkoutProgram(workoutid, userid, usertok))
+        handleSelectWorkoutProgram: (workoutid, isCustom, userid, usertok) => {
+            dispatch(selectWorkoutProgram(workoutid, isCustom, userid, usertok))
         },
         handleCompleteWorkoutProgram: (userid, usertok) => {
             dispatch(completeWorkoutProgram(userid, usertok))
