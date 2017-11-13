@@ -11,16 +11,6 @@ class Workout extends React.Component {
     constructor(props) {
         super(props)
 
-        // this.state = {
-        //     defaultInfo: {
-        //         workoutList: [],
-        //         selected: [-1]
-        //     },
-        //     customWorkoutList: [],
-        //     customSelected: [-1],
-        //     creatingCustom: false
-        // }
-
         this.state = {
             defaultWorkoutList: [],
             defaultSelected: [-1],
