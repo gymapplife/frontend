@@ -5,3 +5,4 @@ export const GAL_BACKEND_WORKOUT_URL = 'http://ec2-54-196-181-32.compute-1.amazo
 export const GAL_BACKEND_EXERSISE_URL = 'http://ec2-54-196-181-32.compute-1.amazonaws.com/v1/exercises/'
 export const GAL_BACKEND_WORKOUT_LOGS_URL= 'http://ec2-54-196-181-32.compute-1.amazonaws.com/v1/workout-logs/'
 export const GAL_BACKEND_PR_URL= 'http://ec2-54-196-181-32.compute-1.amazonaws.com/v1/personal-record/'
+export const GAL_BACKEND_FOOD_URL = 'http://ec2-54-196-181-32.compute-1.amazonaws.com/v1/food-logs/'
