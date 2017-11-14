@@ -13,6 +13,7 @@ const photosIcon = <FontIcon>📸</FontIcon>;
 class Navbar extends React.Component {
     constructor(props) {
         super(props)
+
         this.state = {
             selectedIdx: 2
         }

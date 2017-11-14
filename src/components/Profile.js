@@ -36,7 +36,7 @@ class Profile extends React.Component {
                         .get(constants.GAL_BACKEND_EXERSISE_URL + exid + '/')
                         .auth(this.props.userInfo.id, this.props.userInfo.accessToken)
                         .end((() => {var creps = pr_obj[exid]; return (err, resp) => this.loadPersonalRecords(err, resp, creps)})())
-                } 
+                }
             }
         }
     }
@@ -61,27 +61,35 @@ class Profile extends React.Component {
         ))
 
         return (
-            <Card>
-                <CardHeader title="Profile" />
-                <img src={this.props.userInfo.pictureUrl} />
-                <table><tbody><tr>
-                    <td> {this.props.userInfo.age} Years </td>
-                    <td> {this.props.userProfile.weight} lbs </td>
-                    <td> {this.props.userProfile.height} cm </td>
-                </tr></tbody></table>
+            <div className="content--center">
+                <div className="profile-image">
+                    <img src={this.props.userInfo.pictureUrl} />
+                </div>
+                <div className="profile-name">
+                    <strong>
+                        {this.props.userInfo.name}
+                    </strong>
+                </div>
+                <div>
+                    {this.props.userInfo.age} Years |&nbsp;
+                    {this.props.userProfile.weight} lbs |&nbsp;
+                    {this.props.userProfile.height} cm
+                </div>
 
                 <h3> Personal Records </h3>
-                <table><tbody>
+                <table className="profile-personal-records"><tbody>
                     {prRows}
                 </tbody></table>
-                
-                <RaisedButton onClick={() => this.props.handleRemoveAccount(this.props.userInfo.id, this.props.userInfo.accessToken)}>
-                    Remove Account
-                </RaisedButton>
+
+                <br /><br />
                 <RaisedButton onClick={() => this.props.handleLogout()}>
                     Logout
                 </RaisedButton>
-            </Card>
+                <br /><br />
+                <RaisedButton onClick={() => this.props.handleRemoveAccount(this.props.userInfo.id, this.props.userInfo.accessToken)}>
+                    Leave
+                </RaisedButton>
+            </div>
         )
     }
 
