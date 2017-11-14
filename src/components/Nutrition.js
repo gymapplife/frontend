@@ -16,9 +16,8 @@ class Nutrition extends React.Component {
         super(props)
         this.state = {
             tab: "view",
-            day: "",
-            week: "",
-            datestring: null,
+            dateobj: null,
+            currentFoodInfo: null,
             showErr: false,
 
             numBreakfast: 0,
@@ -33,12 +32,10 @@ class Nutrition extends React.Component {
             numSacks: 0,
             snackFields: [],
 
-            viewWD: "",
             allFoodLogs: {}
         }
 
         this.handleTabChange = this.handleTabChange.bind(this)
-        this.handleDateChange = this.handleDateChange.bind(this)
         this.handleAddFood = this.handleAddFood.bind(this)
         this.handleRemoveFood = this.handleRemoveFood.bind(this)
         this.handleFoodNameChange = this.handleFoodNameChange.bind(this)
@@ -53,21 +50,6 @@ class Nutrition extends React.Component {
 
     handleTabChange(tab) {
         this.setState({tab: tab})
-    }
-
-    // handleDateChange(field, value) {
-    //     switch (field) {
-    //         case "day":
-    //             this.setState({day: value})
-    //             break
-    //         case "week":
-    //             this.setState({week: value})
-    //             break
-    //     }
-    // }
-
-    handleDateChange(event, date) {
-        // this.setState({datestring: date})
     }
 
     handleAddFood(table) {
@@ -307,36 +289,26 @@ class Nutrition extends React.Component {
         } else {
             let obj = JSON.parse(resp.text)
             console.log(obj)
-            // let day = obj.day
-            // let week = obj.week
-            // let meal = obj.meal
-            // let newfoodlogs = Object.assign({}, this.state.allFoodLogs)
 
-            // if (newfoodlogs[week]) {
-            //     if (newfoodlogs[week][day]) {
-            //         if (newfoodlogs[week][day][meal]) {
-            //             newfoodlogs[week][day][meal].push(obj)
-            //         } else {
-            //             newfoodlogs[week][day][meal] = [obj]
-            //         }
-            //     } else {
-            //         let newday = {}
-            //         newday[meal] = [obj]
-            //         newfoodlogs[week][day] = newday
-            //     }
-            // } else {
-            //     let newday = {}
-            //     newday[meal] = [obj]
+            let datekey = obj.created.substr(0, 10)
+            let meal = obj.meal
+            let newfoodlogs = Object.assign({}, this.state.allFoodLogs)
 
-            //     let newweek = {}
-            //     newweek[day] = newday
+            if (newfoodlogs[datekey]) {
+                newfoodlogs[datekey][meal].push(obj)
+            } else {
+                let newday = {
+                    "BREAKFAST": [],
+                    "LUNCH": [],
+                    "DINNER": [],
+                    "DESSERT": []
+                }
+                newday[meal].push(obj)
+                newfoodlogs[datekey] = newday
+            }
 
-            //     newfoodlogs[week] = newweek
-            // }
-
-            // let view = 'w,' + week + ',d,' + day
-            // this.setState({allFoodLogs: newfoodlogs})
-            // this.setState({viewWD: view})
+            this.setState({allFoodLogs: newfoodlogs})
+            this.setState({dateobj: new Date()})
         }
     }
 
@@ -372,24 +344,24 @@ class Nutrition extends React.Component {
             console.log(err)
         } else {
             let obj = JSON.parse(resp.text)
-            this.setState({allFoodLogs: obj})
-            if (obj != undefined && obj[1] != undefined && obj[1][1] != undefined) {
-                this.setState({viewWD: 'w,1,d,1'})
-            }
+            let today = new Date()
+            let datekey = today.toISOString().substr(0, 10)
+            let cfi = obj[datekey]
+            this.setState({
+                allFoodLogs: obj, 
+                dateobj: new Date(),
+                currentFoodInfo: cfi,
+            })
         }
     }
 
     handleDateSelect(event, date) {
-        this.setState({datestring: date})
+        this.setState({dateobj: date})
     }
 
     handleDeleteDay() {
-        let week = this.state.viewWD.split(",")[1]
-        let day = this.state.viewWD.split(",")[3]
-        let currentFoodInfo = this.state.allFoodLogs[week][day]
-
-        for (var meal in currentFoodInfo) {
-            let foodlist = currentFoodInfo[meal]
+        for (var meal in this.state.currentFoodInfo) {
+            let foodlist = this.state.currentFoodInfo[meal]
             for (var i=0; i<foodlist.length; i++) {
                 console.log("removing food entry with id", foodlist[i].id)
                 request
@@ -404,94 +376,37 @@ class Nutrition extends React.Component {
                     })
 
                 // update state
+                var datekey = this.state.dateobj.toISOString().substring(0, 10)
                 let newfoodlogs = Object.assign({}, this.state.allFoodLogs)
-                let weeklogs = newfoodlogs[week]
-                delete weeklogs[day]
-
-                // also remove the week if day is empty
-                let counter=0
-                for (var key in weeklogs) {
-                    counter += 1
-                }
-                if (counter == 0) {
-                    delete newfoodlogs[week]
-                }
-
-                this.setState({allFoodLogs: newfoodlogs, viewWD: ""})
+                delete newfoodlogs[datekey]
+                this.setState({allFoodLogs: newfoodlogs, currentFoodInfo: null})
             }
         }
     }
 
     render() {
-        let dateItems = []
-        // for (var week in this.state.allFoodLogs) {
-        //     for (var day in this.state.allFoodLogs[week]) {
-        //         let foodEntry = this.state.allFoodLogs[week][day]
-        //         let k = 'w,' + week + ',d,' + day
-        //         let text = 'Week ' + week + ' Day ' + day
-        //         dateItems.push(
-        //             <MenuItem
-        //                 value={k}
-        //                 key={k}
-        //                 primaryText={text}
-        //             />
-        //         )
-        //     }
-        // }
         console.log(this.state.allFoodLogs)
-        for (var datekey in this.state.allFoodLogs) {
-            
-        }
-
-        let currentFoodInfo = null
-        console.log("getting food info from allfoodlogs", this.state.allFoodLogs)
-        if (this.state.datestring !== null) {
-            var datekey = this.state.datestring.toISOString().substring(0, 10)
-            console.log(datekey)
-            currentFoodInfo = this.state.allFoodLogs[datekey]
-            console.log("got ", currentFoodInfo)
-        }
-
         return (
             <Tabs value={this.state.tab} onChange={this.handleTabChange}>
                 <Tab label="View Log" value="view">
                     <div className="content--center">
                         <DatePicker
                             hintText="Date"
-                            value={this.state.datestring}
+                            value={this.state.dateobj}
                             onChange={this.handleDateSelect}
                         />
                         <NutritionHistory
                             userInfo={this.props.userInfo}
-                            foodInfo={currentFoodInfo}
+                            foodInfo={this.state.currentFoodInfo}
                         /><br />
                         <RaisedButton
                             onClick={this.handleDeleteDay}
-                            disabled={this.state.viewWD == ""}
+                            disabled={this.state.dateobj === null}
                         > Delete Day </RaisedButton>
                     </div>
                 </Tab>
                 <Tab label="Record" value="log">
                     <div className="content--center">
-                        <TextField
-                            hintText="Week"
-                            value={this.state.week}
-                            onChange={(event) => {this.handleDateChange("week", event.target.value)}}
-                            errorText = {(!this.state.week || isNaN(this.state.week)) && this.state.showErr && "Invalid"}
-                            className="short-field"
-                        />
-                        <TextField
-                            hintText="Day"
-                            value={this.state.day}
-                            onChange={(event) => {this.handleDateChange("day", event.target.value)}}
-                            errorText = {(!this.state.day || isNaN(this.state.day)) && this.state.showErr && "Invalid"}
-                            className="short-field"
-                        />
-                        <DatePicker
-                            hintText="Date"
-                            value={this.state.datestring}
-                            onChange={this.handleDateChange}
-                        />
                         <h2> Breakfast </h2>
                         <NutritionLogTable
                             foodlist={this.state.breakfastFields}
@@ -544,7 +459,6 @@ class Nutrition extends React.Component {
             </Tabs>
         )
     }
-
 }
 
 export default Nutrition
