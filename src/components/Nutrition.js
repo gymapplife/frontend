@@ -59,7 +59,7 @@ class Nutrition extends React.Component {
                 this.setState({day: value})
                 break
             case "week":
-                this.setState({week:value})
+                this.setState({week: value})
                 break
         }
     }
@@ -161,7 +161,7 @@ class Nutrition extends React.Component {
                 newlist[idx].name = newname
                 this.setState({snackFields: newlist})
                 break
-        }       
+        }
     }
 
     handleFoodCaloriesChange(table, idx, newcals) {
@@ -187,7 +187,7 @@ class Nutrition extends React.Component {
                 newlist[idx].calories = newcals
                 this.setState({snackFields: newlist})
                 break
-        }       
+        }
     }
 
     handleSubmit() {
@@ -315,7 +315,7 @@ class Nutrition extends React.Component {
             let week = obj.week
             let meal = obj.meal
             let newfoodlogs = Object.assign({}, this.state.allFoodLogs)
-            
+
             if (newfoodlogs[week]) {
                 if (newfoodlogs[week][day]) {
                     if (newfoodlogs[week][day][meal]) {
@@ -331,13 +331,16 @@ class Nutrition extends React.Component {
             } else {
                 let newday = {}
                 newday[meal] = [obj]
-                
+
                 let newweek = {}
                 newweek[day] = newday
 
                 newfoodlogs[week] = newweek
             }
+
+            let view = 'w,' + week + ',d,' + day
             this.setState({allFoodLogs: newfoodlogs})
+            this.setState({viewWD: view})
         }
     }
 
@@ -374,6 +377,9 @@ class Nutrition extends React.Component {
         } else {
             let obj = JSON.parse(resp.text)
             this.setState({allFoodLogs: obj})
+            if (obj != undefined && obj[1] != undefined && obj[1][1] != undefined) {
+                this.setState({viewWD: 'w,1,d,1'})
+            }
         }
     }
 
@@ -385,7 +391,7 @@ class Nutrition extends React.Component {
         let week = this.state.viewWD.split(",")[1]
         let day = this.state.viewWD.split(",")[3]
         let currentFoodInfo = this.state.allFoodLogs[week][day]
-        
+
         for (var meal in currentFoodInfo) {
             let foodlist = currentFoodInfo[meal]
             for (var i=0; i<foodlist.length; i++) {
@@ -400,12 +406,12 @@ class Nutrition extends React.Component {
                             console.log(resp.text)
                         }
                     })
-                
+
                 // update state
                 let newfoodlogs = Object.assign({}, this.state.allFoodLogs)
                 let weeklogs = newfoodlogs[week]
                 delete weeklogs[day]
-                
+
                 // also remove the week if day is empty
                 let counter=0
                 for (var key in weeklogs) {
@@ -447,39 +453,39 @@ class Nutrition extends React.Component {
 
         return (
             <Tabs value={this.state.tab} onChange={this.handleTabChange}>
-                <Tab label="View" value="view">
-                    <Card>
-                        <h1> View Nutrition History </h1>
+                <Tab label="View Log" value="view">
+                    <div className="content--center">
                         <DropDownMenu maxHeight={300} value={this.state.viewWD} onChange={this.handleWDSelect}>
                             {dateItems}
                         </DropDownMenu>
-                        <RaisedButton 
+                        <NutritionHistory
+                            userInfo={this.props.userInfo}
+                            foodInfo={currentFoodInfo}
+                        /><br />
+                        <RaisedButton
                             onClick={this.handleDeleteDay}
                             disabled={this.state.viewWD == ""}
                         > Delete Day </RaisedButton>
-                        <NutritionHistory 
-                            userInfo={this.props.userInfo}
-                            foodInfo={currentFoodInfo}
-                        />
-                    </Card>
+                    </div>
                 </Tab>
-                <Tab label="Log" value="log">
-                    <Card>
-                        <h1> Create Nutrition Log </h1>
-                        <TextField 
-                            hintText="Week" 
-                            value={this.state.week} 
+                <Tab label="Record" value="log">
+                    <div className="content--center">
+                        <TextField
+                            hintText="Week"
+                            value={this.state.week}
                             onChange={(event) => {this.handleDateChange("week", event.target.value)}}
                             errorText = {(!this.state.week || isNaN(this.state.week)) && this.state.showErr && "Invalid"}
+                            className="short-field"
                         />
-                        <TextField 
+                        <TextField
                             hintText="Day"
                             value={this.state.day}
                             onChange={(event) => {this.handleDateChange("day", event.target.value)}}
                             errorText = {(!this.state.day || isNaN(this.state.day)) && this.state.showErr && "Invalid"}
+                            className="short-field"
                         />
                         <h2> Breakfast </h2>
-                        <NutritionLogTable 
+                        <NutritionLogTable
                             foodlist={this.state.breakfastFields}
                             tableName="breakfast"
                             handleAddFood={this.handleAddFood}
@@ -489,7 +495,7 @@ class Nutrition extends React.Component {
                             showErr={this.state.showErr}
                         />
                         <h2> Lunch </h2>
-                        <NutritionLogTable 
+                        <NutritionLogTable
                             foodlist={this.state.lunchFields}
                             tableName="lunch"
                             handleAddFood={this.handleAddFood}
@@ -499,7 +505,7 @@ class Nutrition extends React.Component {
                             showErr={this.state.showErr}
                         />
                         <h2> Dinner </h2>
-                        <NutritionLogTable 
+                        <NutritionLogTable
                             foodlist={this.state.dinnerFields}
                             tableName="dinner"
                             handleAddFood={this.handleAddFood}
@@ -509,7 +515,7 @@ class Nutrition extends React.Component {
                             showErr={this.state.showErr}
                         />
                         <h2> Snacks </h2>
-                        <NutritionLogTable 
+                        <NutritionLogTable
                             foodlist={this.state.snackFields}
                             tableName="snack"
                             handleAddFood={this.handleAddFood}
@@ -517,16 +523,15 @@ class Nutrition extends React.Component {
                             handleNameChange={this.handleFoodNameChange}
                             handleCaloriesChange={this.handleFoodCaloriesChange}
                             showErr={this.state.showErr}
-                        />
-                        <RaisedButton 
-                            onClick={this.handleSubmit} 
+                        /><br />
+                        <RaisedButton
+                            onClick={this.handleSubmit}
                             disabled={this.state.numBreakfast == 0 &&
                                 this.state.numLunch == 0 &&
                                 this.state.numDinner == 0 &&
                                 this.state.numSacks == 0}
                         > Submit </RaisedButton>
-                        <RaisedButton onClick={this.handleReset}> Reset </RaisedButton>
-                    </Card>
+                    </div>
                 </Tab>
             </Tabs>
         )

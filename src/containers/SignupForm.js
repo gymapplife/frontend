@@ -123,7 +123,7 @@ class SignupForm extends React.Component {
             return (
                 <div className="box">
                     <AppBar title="GymApp.life" className="header" />
-                    <div className="content home-loggedout">
+                    <div className="content home-loggedout content--center">
                         <div className="home-loggedout--align">
                             <h2 className="helvetica-text">Welcome to GymApp.life!</h2>
                             {form}
