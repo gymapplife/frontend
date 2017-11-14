@@ -309,6 +309,7 @@ class Nutrition extends React.Component {
 
             this.setState({allFoodLogs: newfoodlogs})
             this.setState({dateobj: new Date()})
+            console.log(this.state)
         }
     }
 
