@@ -8,7 +8,7 @@ import { Redirect } from 'react-router-dom'
 
 const Header = ({ loggedIn, signedUp, userInfo, handleFacebookResponse, handleLogout, handleRemoveAccount }) => {
     return (
-        <Card className="home-loggedout home-loggedout--background">
+        <Card className="home-loggedout home-loggedout--background content--center">
             <div className="home-loggedout--align">
                 <CardTitle className="helvetica-text" title="GymApp.life" titleColor="white" titleStyle={{ fontSize: '58px', lineHeight: '72px', }}
                     subtitle="Discover your fitness goals." subtitleColor="white" subtitleStyle={{ fontSize: '24px', fontStyle: 'italic', }} />

@@ -12,22 +12,18 @@ class NutritionRow extends React.Component {
 
     render() {
         return (
-            <Toolbar>
-            <ToolbarGroup firstChild={true}>
-                <TextField value={this.props.foodName} onChange={this.props.handleNameChange} hintText="Food" 
-                errorText={!this.props.foodName && this.props.showErr && "Required"}
-                />
-            </ToolbarGroup>
-            <ToolbarGroup>
-                <TextField value={this.props.foodCalories} onChange={this.props.handleCaloriesChange} hintText="Calories" 
-                errorText = {(!this.props.foodCalories || isNaN(this.props.foodCalories)) && this.props.showErr && "Invalid"}
-                />
-            </ToolbarGroup>
-            <ToolbarGroup>
-                <RaisedButton onClick={() => this.props.handleRemoveRow(this.props.itemIdx)}> Remove </RaisedButton>
-            </ToolbarGroup>
-            </Toolbar>
-        )  
+            <div className="food-new-row">
+                <div>
+                    <TextField value={this.props.foodName} onChange={this.props.handleNameChange} hintText="Food Item"
+                        errorText={!this.props.foodName && this.props.showErr && "Required"}
+                        />
+                    <TextField value={this.props.foodCalories || ""} onChange={this.props.handleCaloriesChange} hintText="Calories"
+                        errorText = {(!this.props.foodCalories || isNaN(this.props.foodCalories)) && this.props.showErr && "Invalid"}
+                        className="short-field" />
+                    <RaisedButton className="short-field" onClick={() => this.props.handleRemoveRow(this.props.itemIdx)}> ╳ </RaisedButton>
+                </div>
+            </div>
+        )
     }
 }
 
@@ -59,9 +55,9 @@ class NutritionLogTable extends React.Component {
 
     render() {
         const rows = this.props.foodlist.map((food, idx) => (
-            <NutritionRow 
-                key={idx} 
-                itemIdx={idx} 
+            <NutritionRow
+                key={idx}
+                itemIdx={idx}
                 foodName={this.props.foodlist[idx].name}
                 foodCalories={this.props.foodlist[idx].calories}
                 handleNameChange={(event) => {this.handleNameChange(idx, event.target.value)}}
@@ -71,9 +67,9 @@ class NutritionLogTable extends React.Component {
             />
         ))
         return (
-            <div>
+            <div className="nutrition-new-table">
                 {rows}
-                <RaisedButton onClick={this.handleAddRow}> Add Food </RaisedButton>
+                <RaisedButton onClick={this.handleAddRow}> Add Item </RaisedButton>
             </div>
         )
     }

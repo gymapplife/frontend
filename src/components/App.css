@@ -23,6 +23,10 @@ body {
   overflow-y: auto;
 }
 
+.content--center {
+  text-align: center;
+}
+
 .home-loggedout--background {
   background: url(./images/home-bg.png) center no-repeat black;
   background-size: auto 100%;
@@ -30,7 +34,6 @@ body {
 
 .home-loggedout {
   height: 100vh;
-  text-align: center;
   vertical-align: middle;
   position: relative;
 }
@@ -44,4 +47,51 @@ body {
 
 .helvetica-text {
   font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
+}
+
+.short-field {
+  width: 15vh !important;
+  margin: 0 4px !important;
+}
+
+.clear {
+  clear: both;
+}
+
+.nutrition-new-table {
+  width: 80vw;
+  margin: 0 auto;
+}
+
+.food-new-row {
+  display: flex;
+  flex-flow: row;
+}
+
+.food-new-row div {
+  margin: 0 auto;
+}
+
+.nutrition-log {
+  margin: 0 auto;
+}
+
+.nutrition-log td {
+  border: 1px solid #ccc;
+  margin: 0;
+  padding: 2px 8px;
+}
+
+.nutrition-log tr {
+  display: flex;
+  width: 80vw;
+}
+
+.nutrition-log-name {
+  text-align: left;
+  width: 80%;
+}
+
+.nutrition-log-calories {
+  width: 20%;
 }
