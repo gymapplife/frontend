@@ -7,6 +7,7 @@ import NutritionHistory from './NutritionHistory'
 import RaisedButton from 'material-ui/RaisedButton'
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
+import DatePicker from 'material-ui/DatePicker';
 import request from 'superagent'
 import * as constants from '../constants'
 
@@ -17,6 +18,7 @@ class Nutrition extends React.Component {
             tab: "view",
             day: "",
             week: "",
+            datestring: null,
             showErr: false,
 
             numBreakfast: 0,
@@ -44,7 +46,7 @@ class Nutrition extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this)
         this.handleLocalAddDay = this.handleLocalAddDay.bind(this)
         this.handleReset = this.handleReset.bind(this)
-        this.handleWDSelect = this.handleWDSelect.bind(this)
+        this.handleDateSelect = this.handleDateSelect.bind(this)
         this.loadFoods = this.loadFoods.bind(this)
         this.handleDeleteDay = this.handleDeleteDay.bind(this)
     }
@@ -53,15 +55,19 @@ class Nutrition extends React.Component {
         this.setState({tab: tab})
     }
 
-    handleDateChange(field, value) {
-        switch (field) {
-            case "day":
-                this.setState({day: value})
-                break
-            case "week":
-                this.setState({week: value})
-                break
-        }
+    // handleDateChange(field, value) {
+    //     switch (field) {
+    //         case "day":
+    //             this.setState({day: value})
+    //             break
+    //         case "week":
+    //             this.setState({week: value})
+    //             break
+    //     }
+    // }
+
+    handleDateChange(event, date) {
+        // this.setState({datestring: date})
     }
 
     handleAddFood(table) {
@@ -193,8 +199,6 @@ class Nutrition extends React.Component {
     handleSubmit() {
         let verify = true
         var entry
-        if (!this.state.week || isNaN(this.state.week)) verify = false
-        if (!this.state.day || isNaN(this.state.day)) verify = false
         for (var i=0; i<this.state.breakfastFields.length; i++) {
             entry = this.state.breakfastFields[i]
             if (!entry.name) verify = false
@@ -229,8 +233,6 @@ class Nutrition extends React.Component {
 
                 let body = {
                     name: entry.name,
-                    week: this.state.week,
-                    day: this.state.day,
                     calories: entry.calories,
                     meal: "BREAKFAST"
                 }
@@ -248,8 +250,6 @@ class Nutrition extends React.Component {
 
                 let body = {
                     name: entry.name,
-                    week: this.state.week,
-                    day: this.state.day,
                     calories: entry.calories,
                     meal: "LUNCH"
                 }
@@ -267,8 +267,6 @@ class Nutrition extends React.Component {
 
                 let body = {
                     name: entry.name,
-                    week: this.state.week,
-                    day: this.state.day,
                     calories: entry.calories,
                     meal: "DINNER"
                 }
@@ -286,8 +284,6 @@ class Nutrition extends React.Component {
 
                 let body = {
                     name: entry.name,
-                    week: this.state.week,
-                    day: this.state.day,
                     calories: entry.calories,
                     meal: "SNACK"
                 }
@@ -311,36 +307,36 @@ class Nutrition extends React.Component {
         } else {
             let obj = JSON.parse(resp.text)
             console.log(obj)
-            let day = obj.day
-            let week = obj.week
-            let meal = obj.meal
-            let newfoodlogs = Object.assign({}, this.state.allFoodLogs)
+            // let day = obj.day
+            // let week = obj.week
+            // let meal = obj.meal
+            // let newfoodlogs = Object.assign({}, this.state.allFoodLogs)
 
-            if (newfoodlogs[week]) {
-                if (newfoodlogs[week][day]) {
-                    if (newfoodlogs[week][day][meal]) {
-                        newfoodlogs[week][day][meal].push(obj)
-                    } else {
-                        newfoodlogs[week][day][meal] = [obj]
-                    }
-                } else {
-                    let newday = {}
-                    newday[meal] = [obj]
-                    newfoodlogs[week][day] = newday
-                }
-            } else {
-                let newday = {}
-                newday[meal] = [obj]
+            // if (newfoodlogs[week]) {
+            //     if (newfoodlogs[week][day]) {
+            //         if (newfoodlogs[week][day][meal]) {
+            //             newfoodlogs[week][day][meal].push(obj)
+            //         } else {
+            //             newfoodlogs[week][day][meal] = [obj]
+            //         }
+            //     } else {
+            //         let newday = {}
+            //         newday[meal] = [obj]
+            //         newfoodlogs[week][day] = newday
+            //     }
+            // } else {
+            //     let newday = {}
+            //     newday[meal] = [obj]
 
-                let newweek = {}
-                newweek[day] = newday
+            //     let newweek = {}
+            //     newweek[day] = newday
 
-                newfoodlogs[week] = newweek
-            }
+            //     newfoodlogs[week] = newweek
+            // }
 
-            let view = 'w,' + week + ',d,' + day
-            this.setState({allFoodLogs: newfoodlogs})
-            this.setState({viewWD: view})
+            // let view = 'w,' + week + ',d,' + day
+            // this.setState({allFoodLogs: newfoodlogs})
+            // this.setState({viewWD: view})
         }
     }
 
@@ -383,8 +379,8 @@ class Nutrition extends React.Component {
         }
     }
 
-    handleWDSelect(event, index, value) {
-        this.setState({viewWD: value})
+    handleDateSelect(event, date) {
+        this.setState({datestring: date})
     }
 
     handleDeleteDay() {
@@ -428,36 +424,43 @@ class Nutrition extends React.Component {
 
     render() {
         let dateItems = []
-        for (var week in this.state.allFoodLogs) {
-            for (var day in this.state.allFoodLogs[week]) {
-                let foodEntry = this.state.allFoodLogs[week][day]
-                let k = 'w,' + week + ',d,' + day
-                let text = 'Week ' + week + ' Day ' + day
-                dateItems.push(
-                    <MenuItem
-                        value={k}
-                        key={k}
-                        primaryText={text}
-                    />
-                )
-            }
+        // for (var week in this.state.allFoodLogs) {
+        //     for (var day in this.state.allFoodLogs[week]) {
+        //         let foodEntry = this.state.allFoodLogs[week][day]
+        //         let k = 'w,' + week + ',d,' + day
+        //         let text = 'Week ' + week + ' Day ' + day
+        //         dateItems.push(
+        //             <MenuItem
+        //                 value={k}
+        //                 key={k}
+        //                 primaryText={text}
+        //             />
+        //         )
+        //     }
+        // }
+        console.log(this.state.allFoodLogs)
+        for (var datekey in this.state.allFoodLogs) {
+            
         }
 
         let currentFoodInfo = null
         console.log("getting food info from allfoodlogs", this.state.allFoodLogs)
-        if (this.state.viewWD != "") {
-            let week = this.state.viewWD.split(",")[1]
-            let day = this.state.viewWD.split(",")[3]
-            currentFoodInfo = this.state.allFoodLogs[week][day]
+        if (this.state.datestring !== null) {
+            var datekey = this.state.datestring.toISOString().substring(0, 10)
+            console.log(datekey)
+            currentFoodInfo = this.state.allFoodLogs[datekey]
+            console.log("got ", currentFoodInfo)
         }
 
         return (
             <Tabs value={this.state.tab} onChange={this.handleTabChange}>
                 <Tab label="View Log" value="view">
                     <div className="content--center">
-                        <DropDownMenu maxHeight={300} value={this.state.viewWD} onChange={this.handleWDSelect}>
-                            {dateItems}
-                        </DropDownMenu>
+                        <DatePicker
+                            hintText="Date"
+                            value={this.state.datestring}
+                            onChange={this.handleDateSelect}
+                        />
                         <NutritionHistory
                             userInfo={this.props.userInfo}
                             foodInfo={currentFoodInfo}
@@ -483,6 +486,11 @@ class Nutrition extends React.Component {
                             onChange={(event) => {this.handleDateChange("day", event.target.value)}}
                             errorText = {(!this.state.day || isNaN(this.state.day)) && this.state.showErr && "Invalid"}
                             className="short-field"
+                        />
+                        <DatePicker
+                            hintText="Date"
+                            value={this.state.datestring}
+                            onChange={this.handleDateChange}
                         />
                         <h2> Breakfast </h2>
                         <NutritionLogTable

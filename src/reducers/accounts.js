@@ -57,6 +57,7 @@ export const signedUp = (initialState = false, action) => {
     switch (action.type) {
         case GAL_SIGNUP_COMPLETE:
             return true;
+        case GAL_REMOVEACCOUNT:
         case GAL_REMOVEACCOUNT_COMPLETE:
             return false;
         default:
