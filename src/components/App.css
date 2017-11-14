@@ -109,3 +109,7 @@ body {
   width: 260px;
   margin: 0 auto;
 }
+
+.profile-delete {
+  width: 135px;
+}
