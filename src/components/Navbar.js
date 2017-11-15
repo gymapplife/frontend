@@ -40,9 +40,28 @@ class Navbar extends React.Component {
         if (!this.props.loggedIn) {
             content = <div />
         } else {
+            var selected
+            console.log(this.props.currentPage)
+            switch(this.props.currentPage) {
+                case "workout":
+                    selected = 0
+                    break
+                case "nutrition":
+                    selected = 1
+                    break
+                case "profile":
+                    selected = 2
+                    break
+                case "analytics":
+                    selected = 3
+                    break
+                case "analytics":
+                    selected = 4
+                    break
+            }
             content = (
                 <Paper zDepth={1}>
-                    <BottomNavigation selectedIndex={this.state.selectedIdx}>
+                    <BottomNavigation selectedIndex={selected}>
                         <BottomNavigationItem label="Workout" icon={workoutIcon}
                             onClick={() => {this.select(0); this.navigationClicked("workout")}} />
                         <BottomNavigationItem label="Nutrition" icon={nutritionIcon}

@@ -5,7 +5,8 @@ import { connect } from 'react-redux'
 const mapStateToProps = state => {
     return {
         loggedIn: state.loggedIn,
-        signedUp: state.signedUp
+        signedUp: state.signedUp,
+        currentPage: state.currentPage,
     }
 }
 
