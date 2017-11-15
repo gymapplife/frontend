@@ -2,6 +2,7 @@ import {
     FACEBOOK_LOGIN,
     FACEBOOK_LOGOUT,
     GAL_SIGNUP_COMPLETE,
+    GAL_UPDATE_PROFILE_COMPLETE,
     GAL_REMOVEACCOUNT,
     GAL_REMOVEACCOUNT_COMPLETE,
     GAL_GET_PROFILE_COMPLETE,
@@ -30,6 +31,8 @@ export const userProfileInfo = (initialState = {}, action) => {
     switch(action.type) {
         case GAL_GET_PROFILE_COMPLETE:
             return action.profileInfo
+        case GAL_UPDATE_PROFILE_COMPLETE:
+            return Object.assign({}, initialState, action.updateInfo)
         case SELECT_WORKOUT_PROGRAM_COMPLETE:
             return Object.assign({}, initialState, {current_workout_program: action.programInfo.program.id})
         case COMPLETE_WORKOUT_PROGRAM:

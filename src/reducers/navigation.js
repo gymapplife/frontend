@@ -1,6 +1,7 @@
 import {
     NAVIGATE_TO_PAGE,
-    FACEBOOK_LOGIN
+    FACEBOOK_LOGIN,
+    GAL_UPDATE_PROFILE_COMPLETE
 } from "../actions"
 
 export const currentPage = (initialState = "", action) => {
@@ -8,6 +9,7 @@ export const currentPage = (initialState = "", action) => {
         case NAVIGATE_TO_PAGE:
             return action.to
         case FACEBOOK_LOGIN:
+        case GAL_UPDATE_PROFILE_COMPLETE:
             return "profile"
         default:
             return initialState

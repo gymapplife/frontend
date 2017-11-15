@@ -7,6 +7,8 @@ import Profile from '../containers/Profile'
 import Analytics from '../containers/Analytics'
 import Photos from '../containers/Photos'
 import Navbar from '../containers/Navbar'
+import SettingsMenu from '../containers/SettingsMenu'
+import UpdateProfileForm from '../containers/UpdateProfileForm'
 import { Redirect } from 'react-router-dom'
 import './App.css'
 
@@ -37,6 +39,9 @@ class App extends React.Component {
                     case "photos":
                         content = <Photos />
                         break;
+                    case "editprofile":
+                        content = <UpdateProfileForm />
+                        break;
                     default:
                         content = <Profile />
                 }
@@ -45,7 +50,11 @@ class App extends React.Component {
 
         return (
             <div className="box">
-                <AppBar title="GymApp.life" className="header" />
+                <AppBar 
+                    title="GymApp.life" 
+                    className="header"
+                    iconElementRight={<SettingsMenu />}
+                />
                 <div className="content">
                     {content}
                 </div>
