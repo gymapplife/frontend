@@ -5,7 +5,7 @@ import FontIcon from 'material-ui/FontIcon'
 
 const workoutIcon = <FontIcon>💪</FontIcon>;
 const nutritionIcon = <FontIcon>🍳</FontIcon>;
-const profileIcon = <FontIcon>🤳</FontIcon>;
+const profileIcon = <FontIcon>👤</FontIcon>;
 const analyticsIcon = <FontIcon>📈</FontIcon>;
 const photosIcon = <FontIcon>📸</FontIcon>;
 
