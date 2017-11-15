@@ -16,7 +16,7 @@ class Nutrition extends React.Component {
         super(props)
         this.state = {
             tab: "view",
-            dateobj: null,
+            dateobj: new Date(),
             currentFoodInfo: null,
             showErr: false,
 
@@ -288,7 +288,6 @@ class Nutrition extends React.Component {
             console.log(err)
         } else {
             let obj = JSON.parse(resp.text)
-            console.log(obj)
 
             let datekey = obj.created.substr(0, 10)
             let meal = obj.meal
@@ -349,21 +348,21 @@ class Nutrition extends React.Component {
             let cfi = obj[datekey]
             this.setState({
                 allFoodLogs: obj, 
-                dateobj: new Date(),
+                dateobj: today,
                 currentFoodInfo: cfi,
             })
         }
     }
 
     handleDateSelect(event, date) {
-        this.setState({dateobj: date})
+        let datekey = date.toISOString().substr(0, 10)
+        this.setState({dateobj: date, currentFoodInfo: this.state.allFoodLogs[datekey]})
     }
 
     handleDeleteDay() {
         for (var meal in this.state.currentFoodInfo) {
             let foodlist = this.state.currentFoodInfo[meal]
             for (var i=0; i<foodlist.length; i++) {
-                console.log("removing food entry with id", foodlist[i].id)
                 request
                     .delete(constants.GAL_BACKEND_FOOD_URL + foodlist[i].id + '/')
                     .auth(this.props.userInfo.id, this.props.userInfo.accessToken)
@@ -385,7 +384,6 @@ class Nutrition extends React.Component {
     }
 
     render() {
-        console.log(this.state.allFoodLogs)
         return (
             <Tabs value={this.state.tab} onChange={this.handleTabChange}>
                 <Tab label="View Log" value="view">

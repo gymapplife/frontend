@@ -41,7 +41,6 @@ class Navbar extends React.Component {
             content = <div />
         } else {
             var selected
-            console.log(this.props.currentPage)
             switch(this.props.currentPage) {
                 case "workout":
                     selected = 0
