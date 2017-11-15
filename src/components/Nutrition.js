@@ -288,7 +288,6 @@ class Nutrition extends React.Component {
             console.log(err)
         } else {
             let obj = JSON.parse(resp.text)
-            console.log(obj)
 
             let datekey = obj.created.substr(0, 10)
             let meal = obj.meal
@@ -309,7 +308,6 @@ class Nutrition extends React.Component {
 
             this.setState({allFoodLogs: newfoodlogs})
             this.setState({dateobj: new Date()})
-            console.log(this.state)
         }
     }
 
@@ -347,7 +345,6 @@ class Nutrition extends React.Component {
             let obj = JSON.parse(resp.text)
             let today = new Date()
             let datekey = today.toISOString().substr(0, 10)
-            console.log('loading datekey:', datekey)
             let cfi = obj[datekey]
             this.setState({
                 allFoodLogs: obj, 
@@ -387,7 +384,6 @@ class Nutrition extends React.Component {
     }
 
     render() {
-        console.log(this.state)
         return (
             <Tabs value={this.state.tab} onChange={this.handleTabChange}>
                 <Tab label="View Log" value="view">
