@@ -82,10 +82,6 @@ class Profile extends React.Component {
                 </tbody></table>
 
                 <br /><br />
-                <RaisedButton onClick={() => this.props.handleLogout()}>
-                    Logout
-                </RaisedButton>
-                <br /><br />
                 <RaisedButton onClick={() => this.props.handleRemoveAccount(this.props.userInfo.id, this.props.userInfo.accessToken)} className="profile-delete">
                     Delete Account
                 </RaisedButton>

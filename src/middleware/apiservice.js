@@ -2,6 +2,8 @@ import request from 'superagent'
 import {
     FACEBOOK_LOGOUT,
     GAL_SIGNUP,
+    GAL_UPDATE_PROFILE,
+    GAL_UPDATE_PROFILE_COMPLETE,
     GAL_SIGNUP_COMPLETE,
     GAL_REMOVEACCOUNT,
     GAL_REMOVEACCOUNT_COMPLETE,
@@ -38,6 +40,47 @@ const apiservice = store => next => action => {
                         next({
                             type: FACEBOOK_LOGOUT
                         })
+                    }
+                })
+            break
+        case GAL_UPDATE_PROFILE:
+            request
+                .get(constants.GAL_BACKEND_PROFILE_URL)
+                .auth(action.updateInfo.userid, action.updateInfo.usertok)
+                .end(function(err, resp) {
+                    if (err) {
+                        console.log(err)
+                    } else {
+                        let profileInfo = JSON.parse(resp.text)
+
+                        let body = {
+                            goal: action.updateInfo.goal,
+                            experience: action.updateInfo.experience,
+                            weight: action.updateInfo.weight,
+                            height: action.updateInfo.height,
+                            current_workout_program: profileInfo.current_custom_workout_program,
+                            current_custom_workout_program: profileInfo.current_custom_workout_program
+                        }
+
+                        request
+                            .patch(constants.GAL_BACKEND_PROFILE_URL)
+                            .auth(action.updateInfo.userid, action.updateInfo.usertok)
+                            .send(body)
+                            .end(function(err, resp) {
+                                if (err) {
+                                    console.log(err)
+                                } else {
+                                    next({
+                                        type: GAL_UPDATE_PROFILE_COMPLETE,
+                                        updateInfo: {
+                                            goal: action.updateInfo.goal,
+                                            experience: action.updateInfo.experience,
+                                            weight: action.updateInfo.weight,
+                                            height: action.updateInfo.height,
+                                        }
+                                    })
+                                }
+                            })
                     }
                 })
             break

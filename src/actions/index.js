@@ -6,6 +6,8 @@ export const FACEBOOK_LOGIN = 'FACEBOOK_LOGIN'
 export const FACEBOOK_LOGOUT = 'FACEBOOK_LOGOUT'
 export const GAL_SIGNUP = 'GAL_SIGNUP'
 export const GAL_SIGNUP_COMPLETE = 'GAL_SIGNUP_COMPLETE'
+export const GAL_UPDATE_PROFILE = 'GAL_UPDATE_PROFILE'
+export const GAL_UPDATE_PROFILE_COMPLETE = 'GAL_UPDATE_PROFILE_COMPLETE'
 export const GAL_REMOVEACCOUNT = 'GAL_REMOVEACCOUNT'
 export const GAL_REMOVEACCOUNT_COMPLETE = 'GAL_REMOVEACCOUNT_COMPLETE'
 export const GAL_GET_PROFILE = 'GAL_GET_PROFILE'
@@ -37,6 +39,20 @@ export const galSignup = (userid, usertok, goal, experience, weight, height) => 
 
 export const galConfirmSignedUp = () => {
     return {type: GAL_SIGNUP_COMPLETE}
+}
+
+export const galUpdateProfile = (userid, usertok, goal, experience, weight, height) => {
+    return {
+        type: GAL_UPDATE_PROFILE,
+        updateInfo: {
+            userid: userid, 
+            usertok: usertok,
+            goal: goal,
+            experience: experience,
+            weight: weight,
+            height: height
+        }
+    }
 }
 
 export const galRemoveAccount = (userid, usertok) => {
