@@ -48,6 +48,7 @@ class Navbar extends React.Component {
                 case "nutrition":
                     selected = 1
                     break
+                case "editprofile":
                 case "profile":
                     selected = 2
                     break
