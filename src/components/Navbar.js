@@ -55,7 +55,7 @@ class Navbar extends React.Component {
                 case "analytics":
                     selected = 3
                     break
-                case "analytics":
+                case "photos":
                     selected = 4
                     break
             }
