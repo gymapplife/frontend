@@ -15,7 +15,7 @@ import './App.css'
 class App extends React.Component {
 
     render() {
-        let content
+        let content, appbar
 
         if (!this.props.loggedIn) {
             content = <FacebookHeader />
@@ -23,7 +23,7 @@ class App extends React.Component {
             if (!this.props.signedUp) {
                 content = <Redirect to="/signup" />
             } else {
-                switch(this.props.currentPage) {
+                switch (this.props.currentPage) {
                     case "workout":
                         content = <Workout />
                         break;
@@ -45,16 +45,29 @@ class App extends React.Component {
                     default:
                         content = <Profile />
                 }
+
+                if (this.props.currentPage == "profile" || this.props.currentPage == "editprofile") {
+                    appbar = (
+                        <AppBar
+                            title="GymApp.life"
+                            className="header"
+                            iconElementRight={<SettingsMenu />}
+                        />
+                    )
+                } else {
+                    appbar = (
+                        <AppBar
+                            title="GymApp.life"
+                            className="header"
+                        />
+                    )
+                }
             }
         }
 
         return (
             <div className="box">
-                <AppBar 
-                    title="GymApp.life" 
-                    className="header"
-                    iconElementRight={<SettingsMenu />}
-                />
+                {appbar}
                 <div className="content">
                     {content}
                 </div>

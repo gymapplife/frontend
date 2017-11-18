@@ -1,15 +1,11 @@
-import React, {Component} from 'react';
-import IconMenu from 'material-ui/IconMenu';
-import MenuItem from 'material-ui/MenuItem';
+import React, {Component} from 'react'
+import IconMenu from 'material-ui/IconMenu'
+import MenuItem from 'material-ui/MenuItem'
 import FontIcon from 'material-ui/FontIcon'
 
 class SettingsMenu extends React.Component {
     render() {
-        const settingsIcon = <FontIcon>👤</FontIcon>
-
-        if (!this.props.loggedIn) {
-            return null
-        }
+        const settingsIcon = <FontIcon>⚙️</FontIcon>
 
         return (
             <IconMenu iconButtonElement={settingsIcon}>
