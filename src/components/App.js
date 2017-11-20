@@ -11,9 +11,29 @@ import SettingsMenu from '../containers/SettingsMenu'
 import UpdateProfileForm from '../containers/UpdateProfileForm'
 import GymStatus from './GymStatus'
 import { Redirect } from 'react-router-dom'
+import request from 'superagent'
+import * as constants from '../constants'
 import './App.css'
 
 class App extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.facebookLogout = this.facebookLogout.bind(this)
+    }
+
+    componentDidMount() {
+        request
+            .get(constants.GAL_BACKEND_PROFILE_URL)
+            .auth(this.props.userInfo.id, this.props.userInfo.accessToken)
+            .end(this.facebookLogout)
+    }
+
+    facebookLogout(err, resp) {
+        if (err && err.status === 401) {
+            this.props.handleLogout()
+        }
+    }
 
     render() {
         let content, appbar
