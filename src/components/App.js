@@ -9,6 +9,7 @@ import Photos from '../containers/Photos'
 import Navbar from '../containers/Navbar'
 import SettingsMenu from '../containers/SettingsMenu'
 import UpdateProfileForm from '../containers/UpdateProfileForm'
+import GymStatus from './GymStatus'
 import { Redirect } from 'react-router-dom'
 import './App.css'
 
@@ -41,6 +42,9 @@ class App extends React.Component {
                         break;
                     case "editprofile":
                         content = <UpdateProfileForm />
+                        break;
+                    case "gymstatus":
+                        content = <GymStatus />
                         break;
                     default:
                         content = <Profile />

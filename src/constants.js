@@ -1,5 +1,6 @@
 export const FACEBOOK_APP_ID = '457054341361327'
 export const FACEBOOK_FIELDS = 'name,email,picture,age_range'
+
 export const GAL_BACKEND_ROOT_URL = 'http://be.gymapp.life/v1'
 export const GAL_BACKEND_PROFILE_URL = GAL_BACKEND_ROOT_URL + '/profile/'
 export const GAL_BACKEND_WORKOUT_URL = GAL_BACKEND_ROOT_URL + '/workout-programs/'
@@ -8,3 +9,9 @@ export const GAL_BACKEND_WORKOUT_LOGS_URL= GAL_BACKEND_ROOT_URL + '/workout-logs
 export const GAL_BACKEND_PR_URL= GAL_BACKEND_ROOT_URL + '/personal-record/'
 export const GAL_BACKEND_FOOD_URL = GAL_BACKEND_ROOT_URL + '/food-logs/'
 export const GAL_BACKEND_MEDIA_URL = GAL_BACKEND_ROOT_URL + '/media/'
+
+export const WPORTAL_API_ROOT_URL = 'https://api.uwaterloo.ca/v2'
+export const WPORTAL_WIRELESS_USAGE_URL = WPORTAL_API_ROOT_URL + '/wireless/usage/'
+export const WPORTAL_API_KEY = 'ce22d25b1a6f585b845cfbd5842a8a8a'
+export const PAC_BUILDING_ID = '18'
+export const CIF_BUILDING_ID = '42'

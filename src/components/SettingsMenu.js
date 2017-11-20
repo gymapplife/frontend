@@ -10,6 +10,7 @@ class SettingsMenu extends React.Component {
         return (
             <IconMenu iconButtonElement={settingsIcon}>
                 <MenuItem onClick={() => this.props.handleNavigationClicked("editprofile")}> Edit Profile </MenuItem>
+                <MenuItem onClick={() => this.props.handleNavigationClicked("gymstatus")}> Gym Status </MenuItem>
                 <MenuItem onClick={this.props.handleLogout}> Logout </MenuItem>
             </IconMenu>
         )
