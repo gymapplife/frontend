@@ -70,6 +70,7 @@ class CustomWorkoutForm extends React.Component {
                 weight: 20
             }],
             exname: "Custom Exercise",
+            exdesc: "",
             showErr: false,
             allex: []
         }
@@ -81,6 +82,7 @@ class CustomWorkoutForm extends React.Component {
         this.handleRepsChange = this.handleRepsChange.bind(this)
         this.handleWeightChange = this.handleWeightChange.bind(this)
         this.handleNameChange = this.handleNameChange.bind(this)
+        this.handleDescChange = this.handleDescChange.bind(this)
         this.handleCompleteForm = this.handleCompleteForm.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
@@ -146,6 +148,10 @@ class CustomWorkoutForm extends React.Component {
         this.setState({exname: event.target.value})
     }
 
+    handleDescChange(event) {
+        this.setState({exdesc: event.target.value})
+    }
+
     handleCompleteForm(err, resp) {
         if (err) {
             console.log(err)
@@ -185,6 +191,7 @@ class CustomWorkoutForm extends React.Component {
 
             let body = {
                 name: this.state.exname,
+                description: this.state.exdesc,
                 days: JSON.stringify(days)
             }
 
@@ -221,7 +228,8 @@ class CustomWorkoutForm extends React.Component {
         return (
             <div>
                 <TextField hintText="Name" value={this.state.exname} onChange={this.handleNameChange}
-                    errorText={!this.state.exname && this.state.showErr && "Required"}/>
+                    errorText={!this.state.exname && this.state.showErr && "Required"}/><br />
+                <TextField hintText="Description" value={this.state.exdesc} onChange={this.handleDescChange} />
                 {exbars}<br />
                 <RaisedButton onClick={this.handleAddExercise} className="long-btn"> Add Exercise </RaisedButton><br /><br />
                 <RaisedButton onClick={this.handleSubmit}> Submit </RaisedButton><br /><br />
