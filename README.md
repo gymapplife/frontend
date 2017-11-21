@@ -16,6 +16,11 @@ The frontend for our SE 464 project.
 ## Build
 
 ```
+yarn build
+```
+
+To serve it on 8080:
+```
 npm install -g serve
 serve -s build -p 8080
 ```
