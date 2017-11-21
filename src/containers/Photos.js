@@ -5,7 +5,8 @@ import photoscomponent from '../components/Photos'
 const mapStateToProps = state => {
     return {
         loggedIn: state.loggedIn,
-        signedUp: state.signedUp
+        signedUp: state.signedUp,
+        userInfo: state.userFacebookInfo,
     }
 }
 

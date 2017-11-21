@@ -36,6 +36,10 @@ body {
   background-size: auto 100%;
 }
 
+.photo-container img {
+  width: 500px;
+}
+
 .home-loggedout {
   height: 100vh;
   vertical-align: middle;
