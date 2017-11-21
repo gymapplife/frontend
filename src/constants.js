@@ -1,7 +1,7 @@
 export const FACEBOOK_APP_ID = '457054341361327'
 export const FACEBOOK_FIELDS = 'name,email,picture,age_range'
 
-export const GAL_BACKEND_ROOT_URL = 'http://be.gymapp.life/v1'
+export const GAL_BACKEND_ROOT_URL = 'https://be.gymapp.life/v1'
 export const GAL_BACKEND_PROFILE_URL = GAL_BACKEND_ROOT_URL + '/profile/'
 export const GAL_BACKEND_WORKOUT_URL = GAL_BACKEND_ROOT_URL + '/workout-programs/'
 export const GAL_BACKEND_EXERSISE_URL = GAL_BACKEND_ROOT_URL + '/exercises/'
