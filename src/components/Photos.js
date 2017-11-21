@@ -56,31 +56,32 @@ class Photos extends React.Component {
                 for (var key in upload_info.fields) {
                   signed_url += '&' + key + '=' + upload_info.fields[key]
                 }
-                console.log(signed_url)
+                console.log(upload_info.fields)
                 return request
-                  .put(upload_info.url)
-                  .type('form-data')
-                  // .set('Content-Disposition', 'inline')
-                  .send(upload_info.fields)
+                  .post(upload_info.url)
+                  .field(upload_info.fields)
+                  // .attach(file.name, file)
                   .end((e, r) => {
+                    console.log(r.req)
                     if (e) {
                       console.log(e)
                       return
                     }
-                    console.log(r)
-                    let photos = this.state.photos
-                    photos.push({
-                      name: file.name,
-                      download_url: signed_url
-                    })
-                    this.setState({photos: photos})
+                    // console.log(r)
+                    // let photos = this.state.photos
+                    // photos.push({
+                    //   name: file.name,
+                    //   download_url: signed_url
+                    // })
+                    // this.setState({photos: photos})
+                    window.location.reload()
                   })
             })
     }
 
     render() {
         const photoRows = this.state.photos.map((photo, idx) => (
-            <div>
+            <div className="photo-container">
                 <img src={photo.download_url} title={photo.name} alt={photo.name} />
             </div>
         ))
