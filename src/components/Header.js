@@ -17,6 +17,7 @@ const Header = ({ loggedIn, signedUp, userInfo, handleFacebookResponse, handleLo
                         appId={constants.FACEBOOK_APP_ID}
                         autoLoad={false}
                         fields={constants.FACEBOOK_FIELDS}
+                        disableMobileRedirect={true}
                         callback={handleFacebookResponse} />
                 </CardText>
             </div>
