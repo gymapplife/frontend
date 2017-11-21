@@ -19,17 +19,19 @@ class App extends React.Component {
     constructor(props) {
         super(props)
 
-        this.facebookLogout = this.facebookLogout.bind(this)
+        this.facebookExpire = this.facebookExpire.bind(this)
     }
 
-    componentDidMount() {
-        request
-            .get(constants.GAL_BACKEND_PROFILE_URL)
-            .auth(this.props.userInfo.id, this.props.userInfo.accessToken)
-            .end(this.facebookLogout)
+    componentWillReceiveProps(props) {
+        if (props.loggedIn) {
+            request
+                .get(constants.GAL_BACKEND_PROFILE_URL)
+                .auth(props.userInfo.id, props.userInfo.accessToken)
+                .end(this.facebookExpire)
+        }
     }
 
-    facebookLogout(err, resp) {
+    facebookExpire(err, resp) {
         if (err && err.status === 401) {
             this.props.handleLogout()
         }
