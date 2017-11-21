@@ -51,16 +51,17 @@ class Photos extends React.Component {
 
                 console.log(resp.body)
                 var upload_info = resp.body.upload_info
+                upload_info.fields['file'] = file
                 var signed_url = upload_info.url + '?'
                 for (var key in upload_info.fields) {
                   signed_url += '&' + key + '=' + upload_info.fields[key]
                 }
                 console.log(signed_url)
                 return request
-                  .post(signed_url)
-                  .type(file.type)
-                  .set('Content-Disposition', 'inline')
-                  .send(file)
+                  .put(upload_info.url)
+                  .type('form-data')
+                  // .set('Content-Disposition', 'inline')
+                  .send(upload_info.fields)
                   .end((e, r) => {
                     if (e) {
                       console.log(e)
@@ -80,7 +81,7 @@ class Photos extends React.Component {
     render() {
         const photoRows = this.state.photos.map((photo, idx) => (
             <div>
-                <img src="{photo.download_url}" title="{photo.name}" alt="{photo.name}" />
+                <img src={photo.download_url} title={photo.name} alt={photo.name} />
             </div>
         ))
 
