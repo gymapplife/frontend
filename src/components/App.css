@@ -27,6 +27,10 @@ body {
   text-align: center;
 }
 
+.gmaps-iframe {
+  border: 0;
+}
+
 .home-loggedout--background {
   background: url(./images/home-bg.png) center no-repeat black;
   background-size: auto 100%;
@@ -100,7 +104,7 @@ body {
   margin: 0 auto;
 }
 
-.nutrition-log td, .profile-personal-records td {
+.nutrition-log td, .profile-personal-records td, .gyms-near-you td {
   border: 1px solid #ccc;
   margin: 0;
   padding: 2px 8px;
@@ -127,6 +131,11 @@ body {
   overflow: hidden;
   border-radius: 50%;
   margin: 15px auto;
+}
+
+.gyms-near-you {
+  width: 360px;
+  margin: 0 auto;
 }
 
 .profile-personal-records {
