@@ -67,6 +67,15 @@ body {
   clear: both;
 }
 
+.workout-table {
+  width: 90vw;
+  margin: 0 auto;
+}
+
+.log-row--height > * {
+  height: 55px !important;
+}
+
 .customize-workout {
   width: 90vw;
   margin: 0 auto;

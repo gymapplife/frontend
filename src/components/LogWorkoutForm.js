@@ -79,16 +79,15 @@ class ERow extends React.Component {
 
         let instructions
         if (this.props.weight == 0) {
-            instructions = <h3> {this.props.sets} x {this.props.reps} </h3>
+            instructions = <h3> {this.state.exname} - {this.props.sets} x {this.props.reps} </h3>
         } else {
-            instructions = <h3> {this.props.sets} x {this.props.reps} {this.props.weight} lbs </h3>
+            instructions = <h3> {this.state.exname} - {this.props.sets} x {this.props.reps} {this.props.weight} lbs </h3>
         }
 
         return (
-            <div>
-                <h2>{this.state.exname}</h2>
+            <div><br />
                 {instructions}
-                <GridList cols={sets}>
+                <GridList cols={sets} className="log-row--height">
                     {eRow}
                 </GridList>
             </div>
@@ -207,7 +206,7 @@ class LogWorkoutForm extends React.Component {
         } else {
             content = (
                 <div>
-                    {eForms}
+                    {eForms}<br /><br />
                     <RaisedButton onClick={this.handleSubmit}> Submit </RaisedButton>
                 </div>
             )
@@ -216,6 +215,7 @@ class LogWorkoutForm extends React.Component {
         return (
             <div>
                 <h1> {this.props.programInfo.program.name} </h1>
+
                 <DropDownMenu maxHeight={300} value={this.state.wd} onChange={this.handleWDSelect}>
                     {dateItems}
                 </DropDownMenu>

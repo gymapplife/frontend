@@ -52,7 +52,6 @@ class Workout extends React.Component {
         if (selection.length == 1) {
             this.setState({ customSelected: selection})
         }
-        console.log(this.state)
     }
 
     handleSelectDefaultWorkout() {
@@ -125,7 +124,7 @@ class Workout extends React.Component {
         if (this.props.userProfile.current_workout_program === null) {
             if (!this.state.creatingCustom) {
                 content = (
-                <div>
+                <div className="content--center">
                     <h1> Choose a workout. </h1>
                     <h2> Default workouts </h2>
                     <SelectWorkoutTable
@@ -133,8 +132,8 @@ class Workout extends React.Component {
                         handleSelection={this.handleDefaultSelection}
                         selected={this.state.defaultSelected}
                         isCustom={false}
-                    />
-                    <RaisedButton onClick={this.handleSelectDefaultWorkout}> Continue </RaisedButton>
+                    /><br /><br />
+                    <RaisedButton onClick={this.handleSelectDefaultWorkout}> Continue </RaisedButton><br /><br />
 
                     <h2> Custom workouts </h2>
                     <SelectWorkoutTable
@@ -143,11 +142,11 @@ class Workout extends React.Component {
                         selected={this.state.customSelected}
                         isCustom={true}
                     />
-                    <RaisedButton onClick={this.handleSelectCustomWorkout}> Continue </RaisedButton>
+                    <RaisedButton onClick={this.handleSelectCustomWorkout}> Continue </RaisedButton><br /><br />
                     <RaisedButton
                         onClick={this.handleDeleteCustomWorkout}
                         disabled={this.state.customSelected[0] == this.state.customWorkoutList.length || this.state.customWorkoutList.length == 0}
-                    > Delete </RaisedButton>
+                    > Delete </RaisedButton><br /><br />
                 </div>
                 )
             } else {
