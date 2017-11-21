@@ -22,17 +22,17 @@ class App extends React.Component {
         this.facebookLogout = this.facebookLogout.bind(this)
     }
 
-    componentWillReceiveProps(props) {
+    componentDidMount() {
         request
             .get(constants.GAL_BACKEND_PROFILE_URL)
-            .auth(props.userInfo.id, props.userInfo.accessToken)
+            .auth(this.props.userInfo.id, this.props.userInfo.accessToken)
             .end(this.facebookLogout)
     }
 
     facebookLogout(err, resp) {
         if (err && err.status === 401) {
             this.props.handleLogout()
-        } 
+        }
     }
 
     render() {
