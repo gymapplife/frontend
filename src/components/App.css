@@ -50,12 +50,27 @@ body {
 }
 
 .short-field {
-  width: 15vh !important;
+  width: 15vw !important;
+  margin: 0 4px !important;
+}
+
+.long-btn {
+  min-width: 200px !important;
+}
+
+.long-field {
+  width: 30vw !important;
   margin: 0 4px !important;
 }
 
 .clear {
   clear: both;
+}
+
+.customize-workout {
+  width: 90vw;
+  margin: 0 auto;
+  background: none !important;
 }
 
 .nutrition-new-table {
