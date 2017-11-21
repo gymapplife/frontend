@@ -174,14 +174,14 @@ class Workout extends React.Component {
             )
         } else {
             content = (
-                <div>
+                <div className="content--center">
                     {<LogWorkoutForm
                         programInfo={this.props.workoutProgramInfo}
                         userInfo={this.props.userInfo}
                         handleSubmitLog={this.handleSubmitLog}
                         submittedDays={this.props.submittedDays}
-                    />}
-                    <RaisedButton onClick={this.handleCompleteWorkout}> Choose Another Workout </RaisedButton>
+                    />}<br /><br />
+                    <RaisedButton className="long-btn" onClick={this.handleCompleteWorkout}> Choose Another Workout </RaisedButton><br /><br />
                 </div>
             )
         }
