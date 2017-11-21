@@ -10,6 +10,7 @@ import rootReducer from './reducers'
 import 'typeface-roboto'
 import MainRouter from './routes'
 import apiservice from './middleware/apiservice'
+import registerServiceWorker from './registerServiceWorker'
 
 const store = createStore(
     rootReducer,
@@ -33,8 +34,6 @@ render(
         </MuiThemeProvider>
     </Provider>,
     document.getElementById('root')
-);
+)
 
-if (module.hot) {
-    module.hot.accept('./components/App', () => { render(App) })
-}
+registerServiceWorker()
