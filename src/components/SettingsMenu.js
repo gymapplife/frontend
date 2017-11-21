@@ -5,7 +5,7 @@ import FontIcon from 'material-ui/FontIcon'
 
 class SettingsMenu extends React.Component {
     render() {
-        const settingsIcon = <FontIcon>⚙️</FontIcon>
+        const settingsIcon = <FontIcon style={{paddingTop: "7px"}}>⚙️</FontIcon>
 
         return (
             <IconMenu iconButtonElement={settingsIcon}>
