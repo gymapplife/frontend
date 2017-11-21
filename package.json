@@ -17,11 +17,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "highcharts": "^6.0.3",
     "material-ui": "^0.19.4",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-facebook-login": "^3.6.2",
+    "react-highcharts": "^15.0.0",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.17",
@@ -34,7 +36,7 @@
     "typeface-roboto": "0.0.41"
   },
   "scripts": {
-    "start": "PORT=8080 react-scripts start",
+    "start": "set PORT=8080 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
