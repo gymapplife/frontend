@@ -47,7 +47,7 @@ class Workout extends React.Component {
             this.setState({defaultSelected: selection})
         }
     }
-    
+
     handleCustomSelection(selection) {
         if (selection.length == 1) {
             this.setState({ customSelected: selection})
@@ -114,7 +114,7 @@ class Workout extends React.Component {
         request
         .get(constants.GAL_BACKEND_WORKOUT_URL)
         .auth(this.props.userInfo.id, this.props.userInfo.accessToken)
-        .end(this.fetchWorkouts) 
+        .end(this.fetchWorkouts)
     }
 
     render() {
@@ -128,7 +128,7 @@ class Workout extends React.Component {
                 <div>
                     <h1> Choose a workout. </h1>
                     <h2> Default workouts </h2>
-                    <SelectWorkoutTable 
+                    <SelectWorkoutTable
                         workouts={defaultWorkouts}
                         handleSelection={this.handleDefaultSelection}
                         selected={this.state.defaultSelected}
@@ -144,7 +144,7 @@ class Workout extends React.Component {
                         isCustom={true}
                     />
                     <RaisedButton onClick={this.handleSelectCustomWorkout}> Continue </RaisedButton>
-                    <RaisedButton 
+                    <RaisedButton
                         onClick={this.handleDeleteCustomWorkout}
                         disabled={this.state.customSelected[0] == this.state.customWorkoutList.length || this.state.customWorkoutList.length == 0}
                     > Delete </RaisedButton>
@@ -152,8 +152,8 @@ class Workout extends React.Component {
                 )
             } else {
                 content = (
-                    <div>
-                        <CustomWorkoutForm 
+                    <div className="content--center">
+                        <CustomWorkoutForm
                             userInfo={this.props.userInfo}
                             completeForm={this.handleNewCustomWorkout}
                         />
@@ -161,21 +161,21 @@ class Workout extends React.Component {
                     </div>
                 )
             }
-            
+
         }
         else if (!this.props.workoutProgramInfo.program) {
             content = (
                 <div> Loading </div>
             )
             this.props.handleSelectWorkoutProgram (
-                this.props.userProfile.current_workout_program, 
-                this.props.userInfo.id, 
+                this.props.userProfile.current_workout_program,
+                this.props.userInfo.id,
                 this.props.userInfo.accessToken
             )
         } else {
             content = (
                 <div>
-                    {<LogWorkoutForm 
+                    {<LogWorkoutForm
                         programInfo={this.props.workoutProgramInfo}
                         userInfo={this.props.userInfo}
                         handleSubmitLog={this.handleSubmitLog}
@@ -186,11 +186,7 @@ class Workout extends React.Component {
             )
         }
 
-        return (
-            <Card>
-                {content}
-            </Card>
-        )
+        return content
     }
 
 }

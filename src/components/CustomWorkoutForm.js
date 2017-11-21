@@ -36,20 +36,20 @@ class ExerciseBar extends React.Component {
 
     render() {
         return(
-            <Toolbar>
-                <ToolbarGroup firstChild={true}>
-                    <DropDownMenu value={this.props.selectedExId} onChange={this.handleExChange}>
+            <Toolbar className="customize-workout">
+                <ToolbarGroup firstChild={true} className="long-field">
+                    <DropDownMenu value={this.props.selectedExId} className="long-field" onChange={this.handleExChange}>
                         {this.props.allex.map((ex, idx) => (
                             <MenuItem key={idx} value={ex.id} primaryText={ex.name}/>
                         ))}
                     </DropDownMenu>
                 </ToolbarGroup>
                 <ToolbarGroup>
-                    <TextField floatingLabelText="Sets" value={this.props.setsValue} onChange={this.handleSetsChange}
+                    <TextField className="short-field" floatingLabelText="Sets" value={this.props.setsValue} onChange={this.handleSetsChange}
                     errorText={(!this.props.setsValue || isNaN(this.props.setsValue)) && this.props.showErr && "Invalid"}/>
-                    <TextField floatingLabelText="Reps" value={this.props.repsValue} onChange={this.handleRepsChange}
+                    <TextField className="short-field" floatingLabelText="Reps" value={this.props.repsValue} onChange={this.handleRepsChange}
                     errorText={(!this.props.repsValue || isNaN(this.props.repsValue)) && this.props.showErr && "Invalid"}/>
-                    <TextField floatingLabelText="Weight" value={this.props.weightValue} onChange={this.handleWeightChange}
+                    <TextField className="short-field" floatingLabelText="Weight" value={this.props.weightValue} onChange={this.handleWeightChange}
                     errorText={(!this.props.weightValue || isNaN(this.props.weightValue)) && this.props.showErr && "Invalid"}/>
                 </ToolbarGroup>
             </Toolbar>
@@ -65,10 +65,10 @@ class CustomWorkoutForm extends React.Component {
             numExercises: 1,
             exfields: [{
                 selectedExId: 0,
-                sets: 1, 
+                sets: 1,
                 reps: 1,
                 weight: 20
-            }], 
+            }],
             exname: "Custom Exercise",
             showErr: false,
             allex: []
@@ -109,7 +109,7 @@ class CustomWorkoutForm extends React.Component {
         this.setState({
             exfields: [...this.state.exfields, {
                 selectedExId: 0,
-                sets: 1, 
+                sets: 1,
                 reps: 1,
                 weight: 20
             }]
@@ -220,12 +220,11 @@ class CustomWorkoutForm extends React.Component {
 
         return (
             <div>
-                <h1> Customize Workout </h1>
                 <TextField hintText="Name" value={this.state.exname} onChange={this.handleNameChange}
-                errorText={!this.state.exname && this.state.showErr && "Required"}/>
-                {exbars}
-                <RaisedButton onClick={this.handleAddExercise}> Add Exercise </RaisedButton>
-                <RaisedButton onClick={this.handleSubmit}> Submit </RaisedButton>
+                    errorText={!this.state.exname && this.state.showErr && "Required"}/>
+                {exbars}<br />
+                <RaisedButton onClick={this.handleAddExercise} className="long-btn"> Add Exercise </RaisedButton><br /><br />
+                <RaisedButton onClick={this.handleSubmit}> Submit </RaisedButton><br /><br />
             </div>
         )
     }
