@@ -72,7 +72,9 @@ class App extends React.Component {
                         content = <Profile />
                 }
 
-                if (this.props.currentPage == "profile" || this.props.currentPage == "editprofile") {
+                if (this.props.currentPage == "profile" ||
+                    this.props.currentPage == "editprofile" ||
+                    this.props.currentPage == "gymstatus") {
                     appbar = (
                         <AppBar
                             title="GymApp.life"
