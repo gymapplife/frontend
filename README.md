@@ -11,4 +11,11 @@ The frontend for our SE 464 project.
 ## Usage
 
 1. ```yarn start ```
-2. Visit [http://localhost:3000/](http://localhost:3000/)
+2. Visit [http://localhost:8080/](http://localhost:8080/)
+
+## Build
+
+```
+npm install -g serve
+serve -s build -p 8080
+```
